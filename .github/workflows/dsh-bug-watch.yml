@@ -36,7 +36,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Fetch & digest bug discussions
         run: node scripts/fetch-bugs.mjs
@@ -48,7 +48,8 @@ jobs:
 
       - name: Commit digest updates
         run: |
-          git add digest/ || true
+          # .gitignore 把 digest/ 排除了（本地调试用），这里强制 add
+          git add -f digest/ || true
           if git diff --cached --quiet; then
             echo "No digest changes to commit."
           else
