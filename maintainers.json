@@ -1,0 +1,26 @@
+{
+  "_comment": "维护者名单 + 组织。confidence=strong 判定需要：answer 作者或评论作者命中以下其一。",
+  "logins": [
+    "Chinesezjc",
+    "CreatixChu",
+    "GeeeekExplorer",
+    "imccyu",
+    "j-xiang",
+    "kermanx",
+    "Kingwl",
+    "LegGasai",
+    "lsdsjy",
+    "pku-xht",
+    "shigma",
+    "tianyicui",
+    "turtle1999",
+    "yifandingD",
+    "Yifffan",
+    "zdaxie"
+  ],
+  "orgs": [
+    "deepseek-ai"
+  ],
+  "_source": "取自 https://api.github.com/repos/deepseek-ai/deepseek-harness/commits?per_page=100 过去 100 次 commit 的 author.login + /orgs/deepseek-ai/members 公共成员。如有遗漏可手动补。",
+  "_last_updated": "2026-01-15"
+}

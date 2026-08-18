@@ -1,0 +1,50 @@
+name: DSH Bug Watch
+
+on:
+  schedule:
+    # 每 6 小时一次：UTC 0/6/12/18，对应北京时间 8/14/20/02
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      since:
+        description: 'Override cursor (ISO date) to re-scan since this date'
+        required: false
+        default: ''
+
+permissions:
+  discussions: read
+  contents: write
+
+concurrency:
+  group: dsh-bug-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SINCE_OVERRIDE: ${{ inputs.since }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch & digest bug discussions
+        run: node scripts/fetch-bugs.mjs
+
+      - name: Commit digest updates
+        uses: stefanzweifel/git-auto-commit@v5
+        with:
+          file_pattern: 'digest/*'
+          commit_message: 'chore(bug-watch): refresh digest'
+          push_options: '--set-upstream'
