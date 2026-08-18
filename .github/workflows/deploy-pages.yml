@@ -1,0 +1,58 @@
+name: Deploy web UI to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'web/**'
+      - 'digest/notifications/**'
+      - 'digest/index.md'
+      - 'digest/.cursor'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 不要并发跑多个部署
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build artifact
+        run: |
+          mkdir -p _site
+          # 把 web/ 目录的静态文件拷过去
+          cp -r web/. _site/
+          # 顺便把 digest/ 当作可访问静态资源（供以后想直接看 JSON 的人）
+          mkdir -p _site/digest
+          cp -r digest/. _site/digest/ 2>/dev/null || true
+          # Pages 默认从 / 开始：把 index.html 放在根
+          ls -la _site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

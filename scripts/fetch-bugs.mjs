@@ -270,6 +270,76 @@ async function run() {
   writeFileSync(join(DIGEST_DIR, 'index.md'), renderIndexMd(items, generatedAt));
   writeFileSync(join(DIGEST_DIR, `${today}.md`), renderDailyMd(items, today));
 
+  // ---------- 每日 delta（用于 web UI 推送） ----------
+  // 计算"今天新出现"的 bug：createdAt 在过去 24h 内
+  const since24h = new Date(Date.now() - 24 * 3600_000).toISOString();
+  const newBugs = items.filter(b => b.createdAt >= since24h);
+
+  // 计算"今天更新过"的 bug（可能昨天就有但今天有回复/PR）
+  const updatedToday = items.filter(b => b.updatedAt.slice(0, 10) === today);
+
+  // 计算每个根因分类下今天的 new+updated
+  const byCategory = {};
+  for (const b of [...newBugs, ...updatedToday]) {
+    const text = (b.title || '').toLowerCase();
+    let cat = 'other';
+    if (/win-picker|folder\s*picker|readUtf16|UTF-?16|低字节/.test(text)) cat = 'win-picker';
+    else if (/acl|workspace-write|sandbox|puppeteer.*MCP|win32|Hyper-V/.test(text)) cat = 'win-sandbox';
+    else if (/session\s*log|seq|corrupt|tool_call|tool\/result/.test(text)) cat = 'session';
+    else if (/unknown\s*tool|prepare|llm-deepseek|llm-pi-ai|reasoning_content|tool_call_adjacency/.test(text)) cat = 'llm-adapter';
+    else if (/plugin|npm|cordis|peer-dep|dist-tag|ERESOLVE|koffi|node-pty/.test(text)) cat = 'plugin';
+    else if (/trust\s*fence|port-less\s*Origin|127\.0\.0\.1|localhost|HTTPS\s*403|crypto\.randomUUID/.test(text)) cat = 'trust-fence';
+    else if (/composer|IME|aria-modal|focus|mobile|scroll|PWA|iframe|click-?jack/.test(text)) cat = 'web-ui';
+    else if (/freeze|Failed\s*to\s*load|Loading\s*plugins|FrameQueue|busy\s*loop|catalog/.test(text)) cat = 'web-freeze';
+    else if (/subagent|model.*inherit|workflow.*model|dsv4p|扣费/.test(text)) cat = 'subagent';
+    if (!byCategory[cat]) byCategory[cat] = [];
+    byCategory[cat].push(b);
+  }
+
+  const notification = {
+    generatedAt,
+    date: today,
+    repo: `${ORG}/${REPO}`,
+    summary: {
+      totalBugs: items.length,
+      newLast24h: newBugs.length,
+      updatedToday: updatedToday.length,
+      tierBreakdown: {
+        official: items.filter(b => b.tier === 'official').length,
+        community: items.filter(b => b.tier === 'community').length,
+        reported: items.filter(b => b.tier === 'reported').length,
+      },
+    },
+    byCategory,
+    newBugs: newBugs.map(b => ({
+      number: b.number,
+      title: b.title,
+      url: b.url,
+      tier: b.tier,
+      createdAt: b.createdAt,
+      labels: b.labels,
+    })),
+    updatedBugs: updatedToday
+      .filter(b => !newBugs.includes(b))
+      .map(b => ({
+        number: b.number,
+        title: b.title,
+        url: b.url,
+        tier: b.tier,
+        updatedAt: b.updatedAt,
+      })),
+    digestIndexUrl: 'https://raw.githubusercontent.com/luuman-code/dsh-bug-watch/master/digest/index.md',
+    digestLatestUrl: 'https://raw.githubusercontent.com/luuman-code/dsh-bug-watch/master/digest/notifications/latest.json',
+  };
+
+  const NOTIF_DIR = join(DIGEST_DIR, 'notifications');
+  mkdirSync(NOTIF_DIR, { recursive: true });
+  const notifPath = join(NOTIF_DIR, `${today}.json`);
+  writeFileSync(notifPath, JSON.stringify(notification, null, 2));
+  writeFileSync(join(NOTIF_DIR, 'latest.json'), JSON.stringify(notification, null, 2));
+  console.log(`[bug-watch] notification written: ${notifPath}`);
+  console.log(`[bug-watch]   newLast24h=${newBugs.length}, updatedToday=${updatedToday.length}`);
+
   const historyPath = join(DIGEST_DIR, 'history.jsonl');
   const existing = existsSync(historyPath) ? readFileSync(historyPath, 'utf8') : '';
   const known = new Set(

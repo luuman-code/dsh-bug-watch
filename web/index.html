@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DSH Bug Watch · Daily Digest</title>
+  <style>
+    :root {
+      --bg: #0e1117;
+      --panel: #161b22;
+      --panel-2: #1c2128;
+      --border: #30363d;
+      --fg: #e6edf3;
+      --fg-2: #8b949e;
+      --accent: #58a6ff;
+      --official: #d29922;
+      --community: #3fb950;
+      --reported: #6e7681;
+      --danger: #f85149;
+      --radius: 6px;
+      --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg); color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: 14px; line-height: 1.55;
+    }
+    main { max-width: 980px; margin: 0 auto; padding: 32px 24px 64px; }
+    header {
+      display: flex; align-items: baseline; gap: 12px;
+      padding-bottom: 16px; border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    header h1 {
+      font-size: 22px; margin: 0; letter-spacing: -.01em;
+    }
+    header .sub {
+      color: var(--fg-2); font-size: 13px;
+      font-family: var(--mono);
+    }
+    header .right { margin-left: auto; display: flex; gap: 8px; }
+    button.refresh {
+      background: var(--panel); border: 1px solid var(--border); color: var(--fg);
+      padding: 6px 12px; border-radius: var(--radius);
+      cursor: pointer; font-size: 13px;
+    }
+    button.refresh:hover { border-color: var(--accent); color: var(--accent); }
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px; margin-bottom: 24px;
+    }
+    .stat {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 16px;
+    }
+    .stat .v { font-size: 26px; font-weight: 600; letter-spacing: -.01em; }
+    .stat .k { color: var(--fg-2); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+    .stat.community .v { color: var(--community); }
+    .stat.official .v { color: var(--official); }
+    .stat.reported .v { color: var(--reported); }
+    .stat.new .v { color: var(--accent); }
+    section {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px;
+    }
+    section h2 {
+      font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px;
+    }
+    .badge {
+      display: inline-block; padding: 1px 8px; border-radius: 12px;
+      font-size: 11px; font-weight: 600;
+      background: var(--panel-2); color: var(--fg-2);
+      border: 1px solid var(--border);
+    }
+    .badge.new { background: rgba(88,166,255,.15); color: var(--accent); border-color: rgba(88,166,255,.4); }
+    .badge.official { background: rgba(210,153,34,.15); color: var(--official); border-color: rgba(210,153,34,.4); }
+    .badge.community { background: rgba(63,185,80,.15); color: var(--community); border-color: rgba(63,185,80,.4); }
+    .badge.reported { background: rgba(110,118,129,.15); color: var(--reported); border-color: rgba(110,118,129,.4); }
+    ul.bugs { list-style: none; padding: 0; margin: 0; }
+    ul.bugs li {
+      padding: 10px 0; border-top: 1px solid var(--border);
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    ul.bugs li:first-child { border-top: none; }
+    ul.bugs a {
+      color: var(--fg); text-decoration: none;
+    }
+    ul.bugs a:hover { color: var(--accent); }
+    ul.bugs .meta { font-family: var(--mono); font-size: 11px; color: var(--fg-2); margin-top: 4px; }
+    .empty { color: var(--fg-2); font-style: italic; padding: 8px 0; }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+    .cat-tile {
+      background: var(--panel-2); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 10px 12px;
+    }
+    .cat-tile .name { font-family: var(--mono); font-size: 12px; color: var(--fg-2); }
+    .cat-tile .count { font-size: 18px; font-weight: 600; }
+    .cat-tile ul { margin: 6px 0 0; padding: 0; list-style: none; font-size: 12px; }
+    .cat-tile ul li { padding: 2px 0; color: var(--fg-2); }
+    .cat-tile ul a { color: var(--fg); text-decoration: none; }
+    .cat-tile ul a:hover { color: var(--accent); }
+    footer {
+      margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border);
+      color: var(--fg-2); font-size: 12px; display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    footer a { color: var(--fg-2); }
+    footer a:hover { color: var(--accent); }
+    .error {
+      background: rgba(248,81,73,.1); border: 1px solid rgba(248,81,73,.4);
+      color: var(--danger); padding: 12px 16px; border-radius: var(--radius);
+    }
+    .loading { color: var(--fg-2); font-style: italic; }
+    @media (max-width: 640px) {
+      main { padding: 16px 12px 40px; }
+      header { flex-wrap: wrap; }
+      header .right { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>🐛 DSH Bug Watch</h1>
+      <span class="sub" id="meta">daily digest</span>
+      <div class="right">
+        <button class="refresh" onclick="loadAll(true)">↻ Refresh</button>
+        <a class="refresh" href="https://github.com/luuman-code/dsh-bug-watch" target="_blank" rel="noopener">Repo ↗</a>
+      </div>
+    </header>
+
+    <div id="status">Loading latest digest…</div>
+
+    <div class="stat-grid" id="statGrid" style="display:none">
+      <div class="stat new"><div class="v" id="newCount">–</div><div class="k">New last 24h</div></div>
+      <div class="stat"><div class="v" id="updatedCount">–</div><div class="k">Updated today</div></div>
+      <div class="stat official"><div class="v" id="officialCount">–</div><div class="k">🏛️ Official</div></div>
+      <div class="stat community"><div class="v" id="communityCount">–</div><div class="k">👥 Community</div></div>
+      <div class="stat reported"><div class="v" id="reportedCount">–</div><div class="k">📝 Reported</div></div>
+      <div class="stat"><div class="v" id="totalCount">–</div><div class="k">Total bugs (window)</div></div>
+    </div>
+
+    <section id="newSection" style="display:none">
+      <h2>🆕 New bugs (last 24h) <span class="badge" id="newBadge">0</span></h2>
+      <ul class="bugs" id="newList"></ul>
+    </section>
+
+    <section id="updatedSection" style="display:none">
+      <h2>🔄 Updated today <span class="badge" id="updatedBadge">0</span></h2>
+      <ul class="bugs" id="updatedList"></ul>
+    </section>
+
+    <section id="categorySection" style="display:none">
+      <h2>🗂️ Today by category <span class="badge" id="categoryBadge">0</span></h2>
+      <div class="cat-grid" id="categoryGrid"></div>
+    </section>
+
+    <footer>
+      <span>📡 Source: <a href="https://github.com/deepseek-ai/deepseek-harness/discussions" target="_blank" rel="noopener">deepseek-ai/deepseek-harness · Discussions</a></span>
+      <span>🤖 Auto-refreshed daily by <a href="https://github.com/luuman-code/dsh-bug-watch/actions" target="_blank" rel="noopener">GitHub Actions</a></span>
+      <span>📦 Raw JSON: <a id="rawJsonLink" href="#" target="_blank" rel="noopener">notifications/latest.json</a></span>
+    </footer>
+  </main>
+
+  <script>
+    // 三个数据源：首选 latest.json（永远指向当天），其次尝试今天的 daily，最后回退到 index.md
+    const REPO = 'luuman-code/dsh-bug-watch';
+    const BRANCH = 'master';
+    const BASE = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/digest`;
+    const NOTIF_BASE = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/digest/notifications`;
+    const JSON_LIST = [`${NOTIF_BASE}/latest.json`];
+    const UPDATE_KEY = 'dsh-bug-watch:lastFetchedAt';
+
+    async function fetchText(url) {
+      const r = await fetch(url, { cache: 'no-store' });
+      if (!r.ok) throw new Error(`${url} → HTTP ${r.status}`);
+      return await r.text();
+    }
+
+    async function fetchJSON(url) {
+      return JSON.parse(await fetchText(url));
+    }
+
+    function escapeHTML(s) {
+      return (s || '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    function renderBugItem(b, isNew) {
+      const li = document.createElement('li');
+      const tierBadge = `<span class="badge ${b.tier}">${b.tier}</span>`;
+      const ts = isNew ? b.createdAt : b.updatedAt;
+      const tsLabel = isNew ? 'created' : 'updated';
+      li.innerHTML = `
+        <div style="flex:1">
+          <a href="${escapeHTML(b.url)}" target="_blank" rel="noopener">${escapeHTML(b.title)}</a>
+          <div class="meta">#${b.number} · ${tsLabel} ${ts ? ts.slice(0,10) : ''} ${tierBadge}</div>
+        </div>
+      `;
+      return li;
+    }
+
+    function render(n) {
+      document.getElementById('status').style.display = 'none';
+      document.getElementById('statGrid').style.display = 'grid';
+      document.getElementById('meta').textContent = `generated ${n.generatedAt}`;
+
+      const s = n.summary;
+      document.getElementById('newCount').textContent = s.newLast24h;
+      document.getElementById('updatedCount').textContent = s.updatedToday;
+      document.getElementById('officialCount').textContent = s.tierBreakdown.official;
+      document.getElementById('communityCount').textContent = s.tierBreakdown.community;
+      document.getElementById('reportedCount').textContent = s.tierBreakdown.reported;
+      document.getElementById('totalCount').textContent = s.totalBugs;
+
+      // New bugs
+      const newList = document.getElementById('newList');
+      newList.innerHTML = '';
+      document.getElementById('newBadge').textContent = n.newBugs.length;
+      document.getElementById('newSection').style.display = n.newBugs.length ? '' : 'none';
+      if (n.newBugs.length) {
+        n.newBugs.forEach(b => newList.appendChild(renderBugItem(b, true)));
+      } else {
+        newList.innerHTML = '<li class="empty">今天 24h 内没有新 [Bug] 讨论</li>';
+      }
+
+      // Updated bugs
+      const updatedList = document.getElementById('updatedList');
+      updatedList.innerHTML = '';
+      document.getElementById('updatedBadge').textContent = n.updatedBugs.length;
+      document.getElementById('updatedSection').style.display = n.updatedBugs.length ? '' : 'none';
+      if (n.updatedBugs.length) {
+        n.updatedBugs.forEach(b => updatedList.appendChild(renderBugItem(b, false)));
+      } else {
+        updatedList.innerHTML = '<li class="empty">今天没有 bug 被更新</li>';
+      }
+
+      // Categories
+      const grid = document.getElementById('categoryGrid');
+      grid.innerHTML = '';
+      const cats = Object.entries(n.byCategory).sort((a, b) => b[1].length - a[1].length);
+      document.getElementById('categoryBadge').textContent = cats.reduce((s, c) => s + c[1].length, 0);
+      document.getElementById('categorySection').style.display = cats.length ? '' : 'none';
+      cats.forEach(([name, bugs]) => {
+        const tile = document.createElement('div');
+        tile.className = 'cat-tile';
+        const items = bugs.slice(0, 5).map(b => `<li><a href="${escapeHTML(b.url)}" target="_blank" rel="noopener">#${b.number}</a> ${escapeHTML((b.title || '').slice(0, 40))}${(b.title || '').length > 40 ? '…' : ''}</li>`).join('');
+        const more = bugs.length > 5 ? `<li class="empty">…还有 ${bugs.length - 5} 条</li>` : '';
+        tile.innerHTML = `
+          <div class="name">${escapeHTML(name)}</div>
+          <div class="count">${bugs.length}</div>
+          <ul>${items}${more}</ul>
+        `;
+        grid.appendChild(tile);
+      });
+
+      // Raw JSON link
+      document.getElementById('rawJsonLink').href = `${NOTIF_BASE}/${n.date}.json`;
+
+      localStorage.setItem(UPDATE_KEY, n.generatedAt);
+    }
+
+    function renderError(msg) {
+      document.getElementById('status').innerHTML =
+        `<div class="error">⚠️ Failed to load digest: ${escapeHTML(msg)}<br/><br/>` +
+        `可能原因：1) Action 还没跑过第一次；2) raw.githubusercontent.com 被网络限制。<br/>` +
+        `可以点右上角 ↻ Refresh 重试，或访问 <a href="https://github.com/luuman-code/dsh-bug-watch/blob/master/digest/notifications/latest.json" target="_blank" rel="noopener">原始 JSON</a> 确认。</div>`;
+    }
+
+    async function loadAll(force) {
+      const status = document.getElementById('status');
+      status.className = 'loading';
+      status.textContent = 'Loading latest digest…';
+      try {
+        // try each source in order
+        let n;
+        let lastErr;
+        for (const url of JSON_LIST) {
+          try {
+            n = await fetchJSON(url);
+            break;
+          } catch (e) { lastErr = e; }
+        }
+        if (!n) throw lastErr || new Error('all sources failed');
+        render(n);
+      } catch (e) {
+        renderError(e.message || String(e));
+      }
+    }
+
+    // Auto-load on open + reload every 10 minutes
+    loadAll();
+    setInterval(() => loadAll(), 10 * 60 * 1000);
+  </script>
+</body>
+</html>
