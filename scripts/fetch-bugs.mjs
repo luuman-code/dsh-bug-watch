@@ -68,7 +68,7 @@ async function fetchAllDiscussions() {
         discussions(first: 50, after: $cursor, orderBy: {field: UPDATED_AT, direction: DESC}) {
           pageInfo { hasNextPage endCursor }
           nodes {
-            number title url createdAt updatedAt answerChosenAt
+            number title url createdAt updatedAt answerChosenAt closedAt stateReason isAnswered
             author { login }
             category { name }
             labels(first: 10) { nodes { name } }
@@ -255,6 +255,9 @@ async function run() {
       url: _d.url,
       createdAt: _d.createdAt,
       updatedAt: _d.updatedAt,
+      closedAt: _d.closedAt || null,
+      stateReason: _d.stateReason || null,
+      isAnswered: !!_d.isAnswered,
       category: _d.category?.name || null,
       labels: _d.labels?.nodes?.map(l => l.name) || [],
       answerChosenAt: _d.answerChosenAt,
@@ -320,6 +323,7 @@ async function run() {
       totalBugs: allBugs.length,
       newLast24h: newBugs.length,
       updatedToday: updatedToday.length,
+      resolvedBugs: allBugs.filter(b => b.stateReason === 'RESOLVED').length,
       tierBreakdown: {
         official: allBugs.filter(b => b.tier === 'official').length,
         community: allBugs.filter(b => b.tier === 'community').length,
@@ -354,7 +358,7 @@ async function run() {
   writeFileSync(notifPath, JSON.stringify(notification, null, 2));
   writeFileSync(join(NOTIF_DIR, 'latest.json'), JSON.stringify(notification, null, 2));
   console.log(`[bug-watch] notification written: ${notifPath}`);
-  console.log(`[bug-watch]   newLast24h=${newBugs.length}, updatedToday=${updatedToday.length}, totalInWindow=${allBugs.length}`);
+  console.log(`[bug-watch]   newLast24h=${newBugs.length}, updatedToday=${updatedToday.length}, totalInWindow=${allBugs.length}, resolved=${notification.summary.resolvedBugs}`);
 
   if (items.length > 0) {
     const maxUpdated = items.reduce((m, b) => b.updatedAt > m ? b.updatedAt : m, cursor || '');
