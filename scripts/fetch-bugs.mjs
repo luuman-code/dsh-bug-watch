@@ -326,12 +326,15 @@ async function run() {
       // 'resolvedBugs' = discussions formally closed with stateReason=RESOLVED
       // (DSH discussions almost never reach this state — maintainers
       // respond without closing threads). For a practical "this has been
-      // addressed" signal we expose 'answeredBugs' (isAnswered=true).
-      // The displayed "resolved" counter below takes the union: a bug is
-      // resolved if either it was formally closed or an answer was chosen.
+      // addressed" signal we count discussions where an answer was chosen:
+      // answerChosenAt is the durable signal across all history entries,
+      // isAnswered is the newer boolean that's only present on entries
+      // fetched after the schema bump.
       resolvedBugs: allBugs.filter(b => b.stateReason === 'RESOLVED').length,
-      answeredBugs: allBugs.filter(b => b.isAnswered).length,
-      resolvedOrAnswered: allBugs.filter(b => b.stateReason === 'RESOLVED' || b.isAnswered).length,
+      answeredBugs: allBugs.filter(b => !!b.answerChosenAt || b.isAnswered === true).length,
+      resolvedOrAnswered: allBugs.filter(b =>
+        b.stateReason === 'RESOLVED' || !!b.answerChosenAt || b.isAnswered === true
+      ).length,
       tierBreakdown: {
         official: allBugs.filter(b => b.tier === 'official').length,
         community: allBugs.filter(b => b.tier === 'community').length,
