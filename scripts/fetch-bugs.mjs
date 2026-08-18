@@ -270,15 +270,31 @@ async function run() {
   writeFileSync(join(DIGEST_DIR, 'index.md'), renderIndexMd(items, generatedAt));
   writeFileSync(join(DIGEST_DIR, `${today}.md`), renderDailyMd(items, today));
 
+  // ---------- 写 history.jsonl（必须在 notification 之前：notification 基于全量） ----------
+  const historyPath = join(DIGEST_DIR, 'history.jsonl');
+  const existing = existsSync(historyPath) ? readFileSync(historyPath, 'utf8') : '';
+  const known = new Set(
+    existing.split('\n').filter(Boolean).map(l => {
+      try { return JSON.parse(l).number; } catch { return null; }
+    }).filter(Boolean)
+  );
+  const newLines = items.filter(b => !known.has(b.number)).map(b => JSON.stringify(b)).join('\n');
+  if (newLines) {
+    const sep = existing && !existing.endsWith('\n') ? '\n' : '';
+    writeFileSync(historyPath, existing + sep + newLines + '\n');
+  }
+
   // ---------- 每日 delta（用于 web UI 推送） ----------
-  // 计算"今天新出现"的 bug：createdAt 在过去 24h 内
+  // notification 必须基于 history.jsonl 全量计算（items 只是本次 delta）
+  const allBugsText = readFileSync(historyPath, 'utf8');
+  const allBugs = allBugsText.split('\n').filter(Boolean).map(l => {
+    try { return JSON.parse(l); } catch { return null; }
+  }).filter(Boolean);
+
   const since24h = new Date(Date.now() - 24 * 3600_000).toISOString();
-  const newBugs = items.filter(b => b.createdAt >= since24h);
+  const newBugs = allBugs.filter(b => b.createdAt >= since24h);
+  const updatedToday = allBugs.filter(b => b.updatedAt.slice(0, 10) === today);
 
-  // 计算"今天更新过"的 bug（可能昨天就有但今天有回复/PR）
-  const updatedToday = items.filter(b => b.updatedAt.slice(0, 10) === today);
-
-  // 计算每个根因分类下今天的 new+updated
   const byCategory = {};
   for (const b of [...newBugs, ...updatedToday]) {
     const text = (b.title || '').toLowerCase();
@@ -301,13 +317,13 @@ async function run() {
     date: today,
     repo: `${ORG}/${REPO}`,
     summary: {
-      totalBugs: items.length,
+      totalBugs: allBugs.length,
       newLast24h: newBugs.length,
       updatedToday: updatedToday.length,
       tierBreakdown: {
-        official: items.filter(b => b.tier === 'official').length,
-        community: items.filter(b => b.tier === 'community').length,
-        reported: items.filter(b => b.tier === 'reported').length,
+        official: allBugs.filter(b => b.tier === 'official').length,
+        community: allBugs.filter(b => b.tier === 'community').length,
+        reported: allBugs.filter(b => b.tier === 'reported').length,
       },
     },
     byCategory,
@@ -338,20 +354,7 @@ async function run() {
   writeFileSync(notifPath, JSON.stringify(notification, null, 2));
   writeFileSync(join(NOTIF_DIR, 'latest.json'), JSON.stringify(notification, null, 2));
   console.log(`[bug-watch] notification written: ${notifPath}`);
-  console.log(`[bug-watch]   newLast24h=${newBugs.length}, updatedToday=${updatedToday.length}`);
-
-  const historyPath = join(DIGEST_DIR, 'history.jsonl');
-  const existing = existsSync(historyPath) ? readFileSync(historyPath, 'utf8') : '';
-  const known = new Set(
-    existing.split('\n').filter(Boolean).map(l => {
-      try { return JSON.parse(l).number; } catch { return null; }
-    }).filter(Boolean)
-  );
-  const newLines = items.filter(b => !known.has(b.number)).map(b => JSON.stringify(b)).join('\n');
-  if (newLines) {
-    const sep = existing && !existing.endsWith('\n') ? '\n' : '';
-    writeFileSync(historyPath, existing + sep + newLines + '\n');
-  }
+  console.log(`[bug-watch]   newLast24h=${newBugs.length}, updatedToday=${updatedToday.length}, totalInWindow=${allBugs.length}`);
 
   if (items.length > 0) {
     const maxUpdated = items.reduce((m, b) => b.updatedAt > m ? b.updatedAt : m, cursor || '');
