@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T15:01:48.185Z",
+  "generatedAt": "2026-08-18T15:07:03.229Z",
   "date": "2026-08-18",
   "repo": "deepseek-ai/deepseek-harness",
   "summary": {
@@ -7,8 +7,8 @@
     "newLast24h": 48,
     "updatedToday": 77,
     "resolvedBugs": 0,
-    "answeredBugs": 0,
-    "resolvedOrAnswered": 0,
+    "answeredBugs": 4,
+    "resolvedOrAnswered": 4,
     "tierBreakdown": {
       "official": 0,
       "community": 4,
