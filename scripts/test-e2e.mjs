@@ -94,7 +94,8 @@ async function main() {
           ...process.env,
           GH_TOKEN: 'mock-fake-token',
           GH_GRAPHQL_URL: `http://127.0.0.1:${port}/graphql`,
-          SINCE_OVERRIDE: ''
+          SINCE_OVERRIDE: '',
+          SCAN_WINDOW_DAYS: '0'    // mock 数据日期是固定的 2026-01-15，关掉时间窗口避免被过滤
         },
         stdio: 'inherit'
       });
@@ -122,28 +123,28 @@ async function main() {
       historyItems.length === 7,
       `actual=${historyItems.length}`);
 
-    const strong = historyItems.filter(h => h.confidence === 'strong').map(h => h.number).sort((a, b) => a - b);
-    const medium = historyItems.filter(h => h.confidence === 'medium').map(h => h.number).sort((a, b) => a - b);
-    const weak = historyItems.filter(h => h.confidence === 'weak').map(h => h.number).sort((a, b) => a - b);
+    const official = historyItems.filter(h => h.tier === 'official').map(h => h.number).sort((a, b) => a - b);
+    const community = historyItems.filter(h => h.tier === 'community').map(h => h.number).sort((a, b) => a - b);
+    const reported = historyItems.filter(h => h.tier === 'reported').map(h => h.number).sort((a, b) => a - b);
 
-    assert('strong 档 = [#1959, #2078, #2990]',
-      JSON.stringify(strong) === JSON.stringify([1959, 2078, 2990]),
-      `actual=${JSON.stringify(strong)}`);
+    assert('official 档 = [#1959, #2078, #2990]',
+      JSON.stringify(official) === JSON.stringify([1959, 2078, 2990]),
+      `actual=${JSON.stringify(official)}`);
 
-    assert('medium 档 = [#1593]',
-      JSON.stringify(medium) === JSON.stringify([1593]),
-      `actual=${JSON.stringify(medium)}`);
+    assert('community 档 = [#1593]',
+      JSON.stringify(community) === JSON.stringify([1593]),
+      `actual=${JSON.stringify(community)}`);
 
-    assert('weak 档 = [#161, #3002, #3003]',
-      JSON.stringify(weak) === JSON.stringify([161, 3002, 3003]),
-      `actual=${JSON.stringify(weak)}`);
+    assert('reported 档 = [#161, #3002, #3003]',
+      JSON.stringify(reported) === JSON.stringify([161, 3002, 3003]),
+      `actual=${JSON.stringify(reported)}`);
 
     assert('非 bug 讨论 #3001 被过滤',
       !historyItems.some(h => h.number === 3001));
 
-    assert('index.md 含 🟢 Strong 章节', indexMd.includes('🟢 Strong'));
-    assert('index.md 含 🟡 Medium 章节', indexMd.includes('🟡 Medium'));
-    assert('index.md 含 🔴 Weak 章节', indexMd.includes('🔴 Weak'));
+    assert('index.md 含 🏛️ 官方参与 章节', indexMd.includes('🏛️ 官方参与'));
+    assert('index.md 含 👥 社区参与 章节', indexMd.includes('👥 社区参与'));
+    assert('index.md 含 📝 仅报告 章节', indexMd.includes('📝 仅报告'));
 
     for (const n of [2078, 2990, 1959]) {
       assert(`index.md 含 #${n}`, indexMd.includes(`#${n}`));

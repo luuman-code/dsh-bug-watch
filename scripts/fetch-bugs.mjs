@@ -6,7 +6,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { isBugDiscussion, classifyConfidence, extractPRRefs } from './lib-filter.mjs';
+import { isBugDiscussion, classifyTier, extractPRRefs } from './lib-filter.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -34,7 +34,7 @@ function loadMaintainers() {
 }
 const MAINTAINERS = loadMaintainers();
 
-// ---------- 过滤器 / 置信度（已抽到 lib-filter.mjs，便于单测） ----------
+// ---------- 过滤器 / 参与者分级（已抽到 lib-filter.mjs，便于单测） ----------
 
 // ---------- GraphQL ----------
 const GRAPHQL_URL = process.env.GH_GRAPHQL_URL || 'https://api.github.com/graphql';
@@ -105,32 +105,40 @@ async function fetchAllDiscussions() {
 }
 
 // ---------- 引用 PR 解析 ----------
-async function fetchMergedPRs(numbers) {
+// 串行太慢（135s+ for 271 PRs）。改成并发 + 上限。
+async function fetchMergedPRs(numbers, concurrency = 8) {
+  const queue = [...numbers];
   const merged = [];
-  for (const n of numbers) {
-    try {
-      const query = `
-        query {
-          repository(owner: "${ORG}", name: "${REPO}") {
-            pullRequest(number: ${n}) {
-              number merged mergedAt url title
+  async function worker() {
+    while (queue.length > 0) {
+      const n = queue.shift();
+      if (n === undefined) return;
+      try {
+        const query = `
+          query {
+            repository(owner: "${ORG}", name: "${REPO}") {
+              pullRequest(number: ${n}) {
+                number merged mergedAt url title
+              }
             }
           }
+        `;
+        const data = await graphql(query);
+        const pr = data.repository.pullRequest;
+        if (pr && pr.merged) {
+          merged.push({ number: pr.number, url: pr.url, mergedAt: pr.mergedAt, title: pr.title });
         }
-      `;
-      const data = await graphql(query);
-      const pr = data.repository.pullRequest;
-      if (pr && pr.merged) {
-        merged.push({ number: pr.number, url: pr.url, mergedAt: pr.mergedAt, title: pr.title });
+      } catch (e) {
+        // PR 不存在、network error 或 rate limit —— 忽略单条，整体继续
       }
-    } catch (e) {
-      // PR 不存在或无权访问 —— 忽略
     }
   }
+  const workers = Array.from({ length: Math.min(concurrency, numbers.length || 1) }, worker);
+  await Promise.all(workers);
   return merged;
 }
 
-// ---------- 增量游标 ----------
+// ---------- 增量游标 / 时间窗口 ----------
 function loadCursor() {
   const override = process.env.SINCE_OVERRIDE;
   if (override) return override;
@@ -138,11 +146,20 @@ function loadCursor() {
   return existsSync(p) ? readFileSync(p, 'utf8').trim() : null;
 }
 
+// 默认只看 SCAN_WINDOW_DAYS 天内的讨论（默认 180 天），
+// 监控场景没必要扫全库历史。设 0 = 全量。
+function windowCutoff(days) {
+  if (!days || days <= 0) return null;
+  const d = new Date();
+  d.setUTCDate(d.getUTCDate() - days);
+  return d.toISOString();
+}
+
 // ---------- 渲染 ----------
 function renderIndexMd(bugs, generatedAt) {
-  const strong = bugs.filter(b => b.confidence === 'strong');
-  const medium = bugs.filter(b => b.confidence === 'medium');
-  const weak = bugs.filter(b => b.confidence === 'weak');
+  const official = bugs.filter(b => b.tier === 'official');
+  const community = bugs.filter(b => b.tier === 'community');
+  const reported = bugs.filter(b => b.tier === 'reported');
   const fmt = b => {
     const merged = b.mergedPRs.length ? ` — 已合并 PR: ${b.mergedPRs.map(p => `[#${p.number}](${p.url})`).join(', ')}` : '';
     return `- [#${b.number}](${b.url}) **${b.title}**${merged}<br/>  分类：${b.category || '?'} · 标签：${b.labels.join(', ') || '—'} · 最近更新：${b.updatedAt.slice(0, 10)}`;
@@ -153,16 +170,16 @@ function renderIndexMd(bugs, generatedAt) {
     `**目标仓库**: [${ORG}/${REPO}](https://github.com/${ORG}/${REPO}/discussions)`,
     `**本次扫描 Bug 类讨论数**: ${bugs.length}`,
     ``,
-    `## 🟢 Strong — 维护者信号 / 引用合并 PR`,
-    strong.length ? strong.map(fmt).join('\n') : '_（无）_',
+    `## 🏛️ 官方参与 — committer 互动（采纳答案 / 评论 / 合并 PR）`,
+    official.length ? official.map(fmt).join('\n') : '_（无）_',
     ``,
-    `## 🟡 Medium — 已采纳答案但作者非维护者`,
-    medium.length ? medium.map(fmt).join('\n') : '_（无）_',
+    `## 👥 社区参与 — 已采纳答案，作者非 committer`,
+    community.length ? community.map(fmt).join('\n') : '_（无）_',
     ``,
-    `## 🔴 Weak — 仅报告，无修复信号`,
-    weak.map(b => `- [#${b.number}](${b.url}) ${b.title}`).join('\n') || '_（无）_',
+    `## 📝 仅报告 — 无人互动`,
+    reported.map(b => `- [#${b.number}](${b.url}) ${b.title}`).join('\n') || '_（无）_',
     ``,
-    `## 📋 维护者名单配置`,
+    `## 📋 官方名单配置`,
     `_当前 logins_: \`${[...MAINTAINERS.set].join(', ') || '(empty)'}\``,
     `_当前 orgs_: \`${[...MAINTAINERS.orgs].join(', ') || '(empty)'}\``,
     `_编辑 \`maintainers.json\` 或新建 \`maintainers.local.json\` 后提交触发新一轮扫描即可生效。_`,
@@ -177,11 +194,11 @@ function renderDailyMd(bugs, day) {
     ``,
     `本页是当日扫描快照，详细索引见 [index.md](./index.md)。`,
     ``,
-    `| # | Title | Confidence | 答案作者 | 已合并 PR | 链接 |`,
+    `| # | Title | Tier | 答案作者 | 已合并 PR | 链接 |`,
     `|---|---|---|---|---|---|`,
     ...bugs.map(b => {
       const merged = b.mergedPRs.map(p => `#${p.number}`).join(', ') || '—';
-      return `| ${b.number} | ${b.title.replace(/\|/g, '\\|').slice(0, 80)} | ${b.confidence} | ${b.answerAuthor || '—'} | ${merged} | [link](${b.url}) |`;
+      return `| ${b.number} | ${b.title.replace(/\|/g, '\\|').slice(0, 80)} | ${b.tier} | ${b.answerAuthor || '—'} | ${merged} | [link](${b.url}) |`;
     }),
     ``,
     `_Generated at ${new Date().toISOString()}_`
@@ -191,17 +208,21 @@ function renderDailyMd(bugs, day) {
 // ---------- main ----------
 async function run() {
   const cursor = loadCursor();
+  const windowDays = Number(process.env.SCAN_WINDOW_DAYS ?? 180);
+  const cutoff = windowCutoff(windowDays);
   console.log(`[bug-watch] cursor: ${cursor || '(none, full scan)'}`);
+  console.log(`[bug-watch] window: ${windowDays > 0 ? `last ${windowDays} days (since ${cutoff})` : 'unbounded'}`);
 
   const all = await fetchAllDiscussions();
   console.log(`[bug-watch] fetched ${all.length} discussions total`);
 
-  // 增量：只关心 updatedAt > cursor 的条目
-  const candidates = cursor ? all.filter(d => d.updatedAt > cursor) : all;
-  console.log(`[bug-watch] ${candidates.length} candidates since cursor`);
+  // 增量 + 时间窗口
+  let candidates = all;
+  if (cursor) candidates = candidates.filter(d => d.updatedAt > cursor);
+  if (cutoff) candidates = candidates.filter(d => d.updatedAt >= cutoff);
+  console.log(`[bug-watch] ${candidates.length} candidates (after cursor + window)`);
 
   const bugs = [];
-  // 全局 PR 编号去重，减少 API 调用
   const allPRNumbers = new Set();
 
   for (const d of candidates) {
@@ -222,11 +243,12 @@ async function run() {
     console.log(`[bug-watch] cross-checking ${allPRNumbers.size} PR refs for merged state...`);
     const merged = await fetchMergedPRs([...allPRNumbers]);
     for (const pr of merged) mergedCache.set(pr.number, pr);
+    console.log(`[bug-watch]   found ${merged.length} merged PRs`);
   }
 
   const items = bugs.map(({ _d, prNumbers }) => {
     const mergedPRs = prNumbers.map(n => mergedCache.get(n)).filter(Boolean);
-    const confidence = classifyConfidence(_d, mergedPRs, MAINTAINERS);
+    const tier = classifyTier(_d, mergedPRs, MAINTAINERS);
     return {
       number: _d.number,
       title: _d.title,
@@ -238,19 +260,16 @@ async function run() {
       answerChosenAt: _d.answerChosenAt,
       answerAuthor: _d.answer?.author?.login || null,
       mergedPRs,
-      confidence
+      tier
     };
   });
 
   const generatedAt = new Date().toISOString();
   const today = generatedAt.slice(0, 10);
 
-  // 写 index.md（全量中 strong/medium 优先 + 全部 weak 也保留）
   writeFileSync(join(DIGEST_DIR, 'index.md'), renderIndexMd(items, generatedAt));
-  // 写当日页面
   writeFileSync(join(DIGEST_DIR, `${today}.md`), renderDailyMd(items, today));
 
-  // 追加 history.jsonl
   const historyPath = join(DIGEST_DIR, 'history.jsonl');
   const existing = existsSync(historyPath) ? readFileSync(historyPath, 'utf8') : '';
   const known = new Set(
@@ -264,7 +283,6 @@ async function run() {
     writeFileSync(historyPath, existing + sep + newLines + '\n');
   }
 
-  // 更新游标
   if (items.length > 0) {
     const maxUpdated = items.reduce((m, b) => b.updatedAt > m ? b.updatedAt : m, cursor || '');
     if (maxUpdated) writeFileSync(join(DIGEST_DIR, '.cursor'), maxUpdated);

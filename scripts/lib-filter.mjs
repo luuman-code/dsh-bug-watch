@@ -12,25 +12,28 @@ export function isBugDiscussion(d) {
   return false;
 }
 
-// 强/中/弱 分级
-// strong: 引用已合并 PR / 采纳答案作者是维护者 / 维护者评论
-// medium: 采纳答案但作者非维护者
-// weak:   无任何修复信号
-export function classifyConfidence(d, mergedPRs, maintainers) {
-  if (mergedPRs && mergedPRs.length > 0) return 'strong';
+// 三级"参与者身份"分级
+//   official:   committer 参与了（采纳答案作者是 committer / committer 留了评论 / 引用了合并 PR）
+//   community:  已采纳答案，作者不是 committer（社区已验证的方向）
+//   reported:   没人互动过（原始报告）
+//
+// 之前的 confidence 三档(strong/medium/weak) 是"修复置信度"语义，
+// 对 PR/Issues 关闭的仓库不合适；改成"参与者身份"更适合社区驱动项目。
+export function classifyTier(d, mergedPRs, maintainers) {
+  if (mergedPRs && mergedPRs.length > 0) return 'official';
 
-  const authorLogin = d.answer?.author?.login?.toLowerCase();
-  if (d.answerChosenAt && authorLogin && maintainers.set.has(authorLogin)) {
-    return 'strong';
+  const answerAuthor = d.answer?.author?.login?.toLowerCase();
+  if (d.answerChosenAt && answerAuthor && maintainers.set.has(answerAuthor)) {
+    return 'official';
   }
 
   for (const c of d.comments?.nodes || []) {
     const login = c.author?.login?.toLowerCase();
-    if (login && maintainers.set.has(login)) return 'strong';
+    if (login && maintainers.set.has(login)) return 'official';
   }
 
-  if (d.answerChosenAt) return 'medium';
-  return 'weak';
+  if (d.answerChosenAt) return 'community';
+  return 'reported';
 }
 
 export function extractPRRefs(texts) {

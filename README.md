@@ -109,17 +109,19 @@ cd C:\Users\LWB\dsh-bug-watch\scripts
 3. 让 DSH 子代理读取 → 生成 `triage/report-<今天>.md`
 4. 读报告，挑本周要修的 1-2 个 bug 开干
 
-## 置信度（confidence）分级规则
+## 参与者分级（tier）规则
 
-| 等级 | 触发条件 |
-|---|---|
-| 🟢 **strong** | ① 引用了已合并 PR / ② 已采纳答案且答案是维护者写的 / ③ 有维护者评论 |
-| 🟡 **medium** | 已采纳答案，但作者不是维护者 |
-| 🔴 **weak** | 仅 `[Bug]` 报告，无任何修复信号 |
+| 等级 | 含义 | 触发条件 |
+|---|---|---|
+| 🏛️ **official（官方参与）** | committer 互动过 | ① 引用了已合并 PR / ② 已采纳答案且答案是 committer 写的 / ③ 有 committer 评论 |
+| 👥 **community（社区参与）** | 社区已验证方向 | 已采纳答案，但作者不是 committer |
+| 📝 **reported（仅报告）** | 无人互动 | 仅 `[Bug]` 报告，无任何修复信号 |
 
-维护者判定：
+> **为什么不是"置信度"而是"参与者身份"**：很多项目（典型如 DSH）里 committer 不参与讨论，活跃响应者是社区用户。这种项目用"维护者信号=强"的语义会让官方档永远为空，分级失去意义。改成"参与者身份"更直接反映"谁在关心这条 bug"。
+
+committer 判定：
 - `maintainers.json` 里的 `logins` 数组（小写 handle）
-- 或 `maintainers.json` 里的 `orgs` 里的组织成员（当前仅按字面匹配，PR/评论作者与 org 一致即算）
+- 或 `maintainers.json` 里的 `orgs` 里的组织成员
 
 如果你想用本机覆盖（不入仓），新建 `maintainers.local.json`，结构相同。`scripts/fetch-bugs.mjs` 会优先合并两者。
 

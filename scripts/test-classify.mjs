@@ -1,10 +1,10 @@
 // scripts/test-classify.mjs
-// 离线单测：只验证纯函数（filter + classify + extractPRRefs）。
+// 离线单测：只验证纯函数（filter + classifyTier + extractPRRefs）。
 // 不连网络，跑过即说明规则正确。
 
 import {
   isBugDiscussion,
-  classifyConfidence,
+  classifyTier,
   extractPRRefs
 } from './lib-filter.mjs';
 
@@ -61,13 +61,13 @@ eq('空文本',
    []);
 eq('忽略 /path#1 这种 URL 片段',
    extractPRRefs(['see https://github.com/foo/bar/issues/1']),
-   []); // URL 中间 #1 不算 PR ref（无 \w/ 前置保护）
+   []);
 eq('something#1 紧跟 \\w 字符也不命中',
    extractPRRefs(['something#1']),
-   []); // # 前是字母（\w），负向回顾阻止命中
+   []);
 
-// ----- classifyConfidence -----
-console.log('\nclassifyConfidence:');
+// ----- classifyTier -----
+console.log('\nclassifyTier:');
 
 const baseD = {
   answerChosenAt: null,
@@ -75,29 +75,29 @@ const baseD = {
   comments: { nodes: [] }
 };
 
-eq('无信号 → weak',
-   classifyConfidence({ ...baseD }, [], m),
-   'weak');
+eq('无信号 → reported',
+   classifyTier({ ...baseD }, [], m),
+   'reported');
 
-eq('已采纳答案但非维护者 → medium',
-   classifyConfidence({ ...baseD, answerChosenAt: '2026-01-01', answer: { author: { login: 'random' } } }, [], m),
-   'medium');
+eq('已采纳答案但非 committer → community',
+   classifyTier({ ...baseD, answerChosenAt: '2026-01-01', answer: { author: { login: 'random' } } }, [], m),
+   'community');
 
-eq('采纳答案且作者是维护者 → strong',
-   classifyConfidence({ ...baseD, answerChosenAt: '2026-01-01', answer: { author: { login: 'Alice' } } }, [], m),
-   'strong');
+eq('采纳答案且作者是 committer → official',
+   classifyTier({ ...baseD, answerChosenAt: '2026-01-01', answer: { author: { login: 'Alice' } } }, [], m),
+   'official');
 
-eq('维护者评论 → strong',
-   classifyConfidence({ ...baseD, comments: { nodes: [{ author: { login: 'bob' } }] } }, [], m),
-   'strong');
+eq('committer 评论 → official',
+   classifyTier({ ...baseD, comments: { nodes: [{ author: { login: 'bob' } }] } }, [], m),
+   'official');
 
-eq('引用了合并 PR → strong（哪怕无任何评论）',
-   classifyConfidence({ ...baseD }, [{ number: 99 }], m),
-   'strong');
+eq('引用了合并 PR → official（哪怕无任何评论）',
+   classifyTier({ ...baseD }, [{ number: 99 }], m),
+   'official');
 
-eq('社区用户评论，不命中维护者 → weak',
-   classifyConfidence({ ...baseD, comments: { nodes: [{ author: { login: 'community' } }] } }, [], m),
-   'weak');
+eq('社区用户评论，不命中 committer → reported',
+   classifyTier({ ...baseD, comments: { nodes: [{ author: { login: 'community' } }] } }, [], m),
+   'reported');
 
 console.log(`\n总计: ${passed} passed, ${failed} failed`);
 if (failed > 0) process.exit(1);
