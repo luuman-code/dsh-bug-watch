@@ -323,7 +323,15 @@ async function run() {
       totalBugs: allBugs.length,
       newLast24h: newBugs.length,
       updatedToday: updatedToday.length,
+      // 'resolvedBugs' = discussions formally closed with stateReason=RESOLVED
+      // (DSH discussions almost never reach this state — maintainers
+      // respond without closing threads). For a practical "this has been
+      // addressed" signal we expose 'answeredBugs' (isAnswered=true).
+      // The displayed "resolved" counter below takes the union: a bug is
+      // resolved if either it was formally closed or an answer was chosen.
       resolvedBugs: allBugs.filter(b => b.stateReason === 'RESOLVED').length,
+      answeredBugs: allBugs.filter(b => b.isAnswered).length,
+      resolvedOrAnswered: allBugs.filter(b => b.stateReason === 'RESOLVED' || b.isAnswered).length,
       tierBreakdown: {
         official: allBugs.filter(b => b.tier === 'official').length,
         community: allBugs.filter(b => b.tier === 'community').length,
