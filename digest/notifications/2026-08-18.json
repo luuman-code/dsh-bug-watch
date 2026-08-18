@@ -1,0 +1,20 @@
+{
+  "generatedAt": "2026-08-18T14:24:11.546Z",
+  "date": "2026-08-18",
+  "repo": "deepseek-ai/deepseek-harness",
+  "summary": {
+    "totalBugs": 0,
+    "newLast24h": 0,
+    "updatedToday": 0,
+    "tierBreakdown": {
+      "official": 0,
+      "community": 0,
+      "reported": 0
+    }
+  },
+  "byCategory": {},
+  "newBugs": [],
+  "updatedBugs": [],
+  "digestIndexUrl": "https://raw.githubusercontent.com/luuman-code/dsh-bug-watch/master/digest/index.md",
+  "digestLatestUrl": "https://raw.githubusercontent.com/luuman-code/dsh-bug-watch/master/digest/notifications/latest.json"
+}
