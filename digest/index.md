@@ -17,4 +17,4 @@ _当前 logins_: `chinesezjc, creatixchu, geeeekexplorer, imccyu, j-xiang, kerma
 _当前 orgs_: `deepseek-ai`
 _编辑 `maintainers.json` 或新建 `maintainers.local.json` 后提交触发新一轮扫描即可生效。_
 
-_Last updated: 2026-08-18T14:24:11.546Z_
+_Last updated: 2026-08-18T14:26:58.095Z_
