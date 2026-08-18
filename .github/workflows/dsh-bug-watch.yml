@@ -45,6 +45,8 @@ jobs:
         run: |
           git config user.name 'dsh-bug-watch[bot]'
           git config user.email 'dsh-bug-watch[bot]@users.noreply.github.com'
+          # 把 GITHUB_TOKEN 注入到 remote URL，让 git push 能用 workflow token 鉴权
+          git config --local url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
 
       - name: Commit digest updates
         run: |
