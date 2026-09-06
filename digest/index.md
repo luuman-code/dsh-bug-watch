@@ -1,7 +1,7 @@
-# DSH Bug Watch — 2026-09-05
+# DSH Bug Watch — 2026-09-06
 
 **目标仓库**: [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness/discussions)
-**本次扫描 Bug 类讨论数**: 29
+**本次扫描 Bug 类讨论数**: 17
 
 ## 🏛️ 官方参与 — committer 互动（采纳答案 / 评论 / 合并 PR）
 _（无）_
@@ -10,39 +10,27 @@ _（无）_
 _（无）_
 
 ## 📝 仅报告 — 无人互动
-- [#5588](https://github.com/deepseek-ai/deepseek-harness/discussions/5588) Bug: same-mode sandbox_permissions is rejected as an invalid escalation
-- [#5677](https://github.com/deepseek-ai/deepseek-harness/discussions/5677) [Bug] Web UI history never loads on Firefox-engine browsers (infinite "Loading history…") — Firefox-only failure in lossless-JSON validation
-- [#5673](https://github.com/deepseek-ai/deepseek-harness/discussions/5673) Bug: LLM requests die at ~302s with `terminated` when a provider needs >5min silent prefill
-- [#5670](https://github.com/deepseek-ai/deepseek-harness/discussions/5670) [Bug] 0.1.2-rc.1: llm-pi-ai providers never register — settings namespace "llm-pi-ai" absent, models missing from picker/Models page
-- [#5662](https://github.com/deepseek-ai/deepseek-harness/discussions/5662) Bug: automatic pressure compaction can be skipped on the first resumed turn
-- [#5630](https://github.com/deepseek-ai/deepseek-harness/discussions/5630) Bug: Chinese IME (Microsoft Pinyin) input corrupted in the Web GUI chat composer
-- [#5603](https://github.com/deepseek-ai/deepseek-harness/discussions/5603) [BUG] dsh 0.1.2-rc.1 Settings→Models "Add provider" 静默失效
-- [#4555](https://github.com/deepseek-ai/deepseek-harness/discussions/4555) [Bug] Subagents always fail with 400 "Reasoning is mandatory" when parent uses a thinking-required model (Ox Alpha via OpenRouter)
-- [#5646](https://github.com/deepseek-ai/deepseek-harness/discussions/5646) [BUG] Could not execute tool(s): "write": required field "content" is missing
-- [#5634](https://github.com/deepseek-ai/deepseek-harness/discussions/5634) [BUG] 两个 CSS 视觉跳动 bug
-- [#1026](https://github.com/deepseek-ai/deepseek-harness/discussions/1026) [Bug Report] `edit`（str_replace_editor）重写文件时静默剥掉 UTF-8 BOM
-- [#5629](https://github.com/deepseek-ai/deepseek-harness/discussions/5629) [Bug] SEA VFS patches CommonJS fs but ESM fs exports stay stale; preset discovery receives strings instead of Dirent
-- [#5628](https://github.com/deepseek-ai/deepseek-harness/discussions/5628) [Bug] single-exe Web boot loses dsh.client metadata behind moduleFallback proxies
-- [#5627](https://github.com/deepseek-ai/deepseek-harness/discussions/5627) [Bug] single-exe Web profile misses dsh-session-title-llm; runtime closure verification skips apps/*
-- [#5613](https://github.com/deepseek-ai/deepseek-harness/discussions/5613) [bug]网页搜索设置项，“提供方默认地址”指向有误
-- [#5609](https://github.com/deepseek-ai/deepseek-harness/discussions/5609) [BUG]Upgrade from rc.6 to 0.1.2-rc.1: models page dead until restart + lazy client bundle race
-- [#3229](https://github.com/deepseek-ai/deepseek-harness/discussions/3229) [BUG]死循环-- 一个小问答耗尽我的余额
-- [#5428](https://github.com/deepseek-ai/deepseek-harness/discussions/5428) [Bug] tool-jobs wake budget silently stalls idle agent on job-completion notices after 3 autonomous turns (intermittent)
+- [#1121](https://github.com/deepseek-ai/deepseek-harness/discussions/1121) [Bug] A plugin appending user/message without message.id permanently bricks the session history
 - [#5587](https://github.com/deepseek-ai/deepseek-harness/discussions/5587) [BUG]删了team插件后，尝试自我修复，无法生成新对话
-- [#5596](https://github.com/deepseek-ai/deepseek-harness/discussions/5596) [BUG] 0.1.2-rc.1 历史加载失败：this.ctx.sessionQuery.observeSession is not a function（gateway/internal）
-- [#5599](https://github.com/deepseek-ai/deepseek-harness/discussions/5599) [BUG] Running the latest dsh built from source fails to boot the `web`
-- [#5594](https://github.com/deepseek-ai/deepseek-harness/discussions/5594) [BUG] deadlocks when surface exceeds the model window — the summarization LLM call itself fails with "context overflow", so the session can never compress (nor converse) again
-- [#5593](https://github.com/deepseek-ai/deepseek-harness/discussions/5593) [Bug] Window系统更新到v0.1.2-rc.1 无法加载@deepseek-ai/dsh-session-log-export导致无法正常进入DSH
-- [#5512](https://github.com/deepseek-ai/deepseek-harness/discussions/5512) [bug] Tool params declared as oneOf (no top-level type) are serialized to a string, so oneOf validation always fails with matched 0
-- [#5581](https://github.com/deepseek-ai/deepseek-harness/discussions/5581) [bug] cordis_define: typeless plugin parameter schema makes the web client stringify the object argument
-- [#5576](https://github.com/deepseek-ai/deepseek-harness/discussions/5576) [bug]0.1.2-rc.1重启后，工作区内的对话名称，全部为工作区的名称，点击进入对话后才恢复为该对话的原有名称
-- [#2094](https://github.com/deepseek-ai/deepseek-harness/discussions/2094) [Bug] Windows 上 ensureSymlink 无法识别自己创建的 junction，导致 dsh web 第二次启动失败（附修复）
-- [#5573](https://github.com/deepseek-ai/deepseek-harness/discussions/5573) [Bug][Windows] 36 of 48 `pnpm test` failures are suites creating symlinks without the Windows privilege
-- [#5521](https://github.com/deepseek-ai/deepseek-harness/discussions/5521) [bug] Compaction sends the tool schemas with no tool choice, so a tool-capable model answers with a tool call and the summary is lost silently
+- [#5761](https://github.com/deepseek-ai/deepseek-harness/discussions/5761) [bug] llm-deepseek Config namespace silently reverts to DEFAULT_MODELS (and every other field default) when one required sibling field (thinking/reasoningEffort) is missing
+- [#201](https://github.com/deepseek-ai/deepseek-harness/discussions/201) [BUG] spamming Error: sandbox escalation to "workspace-write" is not strictly wider than this call's current "danger-full-access" mode
+- [#5524](https://github.com/deepseek-ai/deepseek-harness/discussions/5524) [bug] Four smaller ones: an uncancellable compaction, a borrowed timestamp in the crash-repair closer, an over-window first prompt, and an unbounded child turn
+- [#5677](https://github.com/deepseek-ai/deepseek-harness/discussions/5677) [Bug] Web UI history never loads on Firefox-engine browsers (infinite "Loading history…") — Firefox-only failure in lossless-JSON validation
+- [#5741](https://github.com/deepseek-ai/deepseek-harness/discussions/5741) [BUG]切换模型/供应商时导致全量重放会话历史，输入 token 从 1K暴增至900K，每次重试都再次超时
+- [#5757](https://github.com/deepseek-ai/deepseek-harness/discussions/5757) Bug: reopening an existing session shows a blank chat (Assistant stream raw chunk must be a lossless JSON object), and approval dialogs lose their command text
+- [#5754](https://github.com/deepseek-ai/deepseek-harness/discussions/5754) Bug: in-process subagent failures drop the child's error diagnostic — delegating tool shows only "subagent run failed"
+- [#5715](https://github.com/deepseek-ai/deepseek-harness/discussions/5715) [bug] 403 quota exhaustion shown as "API key is invalid": every AUTH-coded failure swallows the real message
+- [#5745](https://github.com/deepseek-ai/deepseek-harness/discussions/5745) [Bug] Linux 环境下当 DSH_HOME 位于 NTFS 挂载分区时，dsh 启动报 mode 755 权限错误且无法通过 chmod 修复
+- [#3002](https://github.com/deepseek-ai/deepseek-harness/discussions/3002) Bug: compaction drops same-route reasoning effort and loses cache compatibility
+- [#5733](https://github.com/deepseek-ai/deepseek-harness/discussions/5733) [Bug Report]: compaction policy never reserves headroom for Non-DS model's output budget — context-window errors after repeated compactions
+- [#5705](https://github.com/deepseek-ai/deepseek-harness/discussions/5705) Bug Report — Windows 受限沙箱中启动 curl.exe 触发 0xC0000142 错误弹窗
+- [#1542](https://github.com/deepseek-ai/deepseek-harness/discussions/1542) [bug] 后台任务挂死导致对话整体冻结：job_output(wait:true) 无活性信号，agent 陷入重复等待
+- [#5690](https://github.com/deepseek-ai/deepseek-harness/discussions/5690) [Bug]: v1→v2 迁移拒绝含 TOOL_NOT_STARTED repair 结果的会话 —— chunk 合成后 repair message id 内嵌的 seq 未随重编号更新
+- [#1624](https://github.com/deepseek-ai/deepseek-harness/discussions/1624) Bug: `npx @deepseek-ai/dsh web` fails on MSYS2, windows node.js and bun
 
 ## 📋 官方名单配置
 _当前 logins_: `chinesezjc, creatixchu, geeeekexplorer, imccyu, j-xiang, kermanx, kingwl, leggasai, lsdsjy, pku-xht, shigma, tianyicui, turtle1999, yifandingd, yifffan, zdaxie`
 _当前 orgs_: `deepseek-ai`
 _编辑 `maintainers.json` 或新建 `maintainers.local.json` 后提交触发新一轮扫描即可生效。_
 
-_Last updated: 2026-09-05T02:23:29.255Z_
+_Last updated: 2026-09-06T02:19:27.421Z_
