@@ -1,116 +1,76 @@
-# DSH Bug Watch — 2026-09-24
+# DSH Bug Watch — 2026-09-25
 
 **目标仓库**: [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness/discussions)
-**本次扫描 Bug 类讨论数**: 97
+**本次扫描 Bug 类讨论数**: 59
 
 ## 🏛️ 官方参与 — committer 互动（采纳答案 / 评论 / 合并 PR）
-_（无）_
+- [#7436](https://github.com/deepseek-ai/deepseek-harness/discussions/7436) **[Bug] dsh@0.1.5-rc.2 / rc.3 not installable: missing @deepseek-ai/dsh-client-ui-sidebar-documentpreview@0.1.5-rc.3**<br/>  分类：Q&A · 标签：— · 最近更新：2026-09-24
+- [#7448](https://github.com/deepseek-ai/deepseek-harness/discussions/7448) **[Bug] 0.1.5-rc.* 中任意一个版本都装不上：rc.3 是一次未完成的发布**<br/>  分类：General · 标签：— · 最近更新：2026-09-24
 
 ## 👥 社区参与 — 已采纳答案，作者非 committer
-_（无）_
+- [#6226](https://github.com/deepseek-ai/deepseek-harness/discussions/6226) **Bug: subagent-codex runs intermittently never settle - the child completes its turn and exits, but the dsh-side run hangs until a server restart**<br/>  分类：Q&A · 标签：— · 最近更新：2026-09-24
 
 ## 📝 仅报告 — 无人互动
-- [#7368](https://github.com/deepseek-ai/deepseek-harness/discussions/7368) [Bug] [0.1.6-alpha.2]Cannot read properties of undefined (reading 'prepare') on every tool call in web profile — dsh-tools Symbol identity mismatch
-- [#7658](https://github.com/deepseek-ai/deepseek-harness/discussions/7658) [Bug] 会话格式迁移后 dsh_session_log 水位失效：每次请求重发整份日志 → 413 且永久卡死
-- [#6823](https://github.com/deepseek-ai/deepseek-harness/discussions/6823) [Bug] Blank Web sidebar after downgrading: localStorage key dsh.workspace.view.v5 stays the same across incompatible state shapes
-- [#7314](https://github.com/deepseek-ai/deepseek-harness/discussions/7314) Bug: web sidebar lists no workspaces and no sessions after upgrade (0.1.5-rc.2)
+- [#7802](https://github.com/deepseek-ai/deepseek-harness/discussions/7802) [Bug] 「加载历史」偶发永久卡住、只有刷新能恢复 —— 加载态没有超时/重试，且复用挂起的 openPromise / Loading history can hang forever until a page refresh: no timeout, no retry, and a reused pending openPromise
+- [#7699](https://github.com/deepseek-ai/deepseek-harness/discussions/7699) [Bug] [DSH 0.1.7-alpha.2] 默认开启的会话日志遥测字段把请求体撑到 205.87 MB，并永久锁死会话（可复现，附实测数据）
+- [#6437](https://github.com/deepseek-ai/deepseek-harness/discussions/6437) [Bug] dsh-client-resources 的 protocolOf 依赖 new URL().hostname，Edge 129 下文件预览显示“文件资源服务不可用”
+- [#7735](https://github.com/deepseek-ai/deepseek-harness/discussions/7735) [Bug] Windows：沙箱给工作区根目录盖 Low 完整性标签后，目录内的 .bat/.cmd/.exe 双击弹「无法验证发布者」
+- [#7804](https://github.com/deepseek-ai/deepseek-harness/discussions/7804) [Bug] Windows：工作区在非系统盘时 ACL 沙箱必然初始化失败（Win32 5 / grantWrite）—— 非系统盘默认 ACL 不给调用者 WRITE_OWNER
+- [#7803](https://github.com/deepseek-ai/deepseek-harness/discussions/7803) [Bug] Web 输入框：微软拼音打中文出现拼音落框、候选词错乱，换输入法即恢复（Lexical 0.49.0）
+- [#7801](https://github.com/deepseek-ai/deepseek-harness/discussions/7801) [Bug] 网页端静默吞掉 session/create 错误；dsh-persona 预设 schema 把 text 改名为 prefix，旧预设无迁移提示直接失效
+- [#7794](https://github.com/deepseek-ai/deepseek-harness/discussions/7794) [Bug] Compaction drops reasoning effort and busts KV cache; idle watchdog cancels active prefill / 压缩丢失推理强度并破坏 KV 缓存
+- [#7800](https://github.com/deepseek-ai/deepseek-harness/discussions/7800) Bug: SessionFormatError "format v4 message requires a producer-owned source kind" - agent turns intermittently fail (core 0.1.7-rc.1)
+- [#7797](https://github.com/deepseek-ai/deepseek-harness/discussions/7797) [Bug] Windows 桌面端高分屏缩放导致 Office 预览图截断/放大（LibreOfficeKit 1.5× DPI 缩放冲突）
+- [#7792](https://github.com/deepseek-ai/deepseek-harness/discussions/7792) [Bug] Models settings shows DeepSeek twice with identical model lists (Web, 0.1.7-rc.2)
+- [#7788](https://github.com/deepseek-ai/deepseek-harness/discussions/7788) [Bug] MCP tool results drop structuredContent — the official computer-use plugin can't reach its own element_token
+- [#7787](https://github.com/deepseek-ai/deepseek-harness/discussions/7787) [Bug] dsh-api-session-controller publishes client types that import @deepseek-ai/dsh-client-store, a devDependency only
 - [#7635](https://github.com/deepseek-ai/deepseek-harness/discussions/7635) [Bug] 0.1.7-rc.1 no longer heals $DSH_HOME/profiles/node_modules (0.1.6 did) — profiles with locally installed plugins break every child process: run_code and voice input die with "subprocess scope exited before its bootstrap consumed the launch request"
-- [#7501](https://github.com/deepseek-ai/deepseek-harness/discussions/7501) [Bug] v0.1.7-alpha.1 深度搜索中上下文被频繁压缩：5分38秒内触发6次（仅1-4条/1.4k-3.6k tokens），并伴随 summary-not-smaller 空转
-- [#6978](https://github.com/deepseek-ai/deepseek-harness/discussions/6978) [bug] 打开会话时，如果AI正在回复，会长时间卡在 载入历史 状态
-- [#7650](https://github.com/deepseek-ai/deepseek-harness/discussions/7650) [BUG] Reaching context window 100% and not triggering auto-compaction
-- [#7649](https://github.com/deepseek-ai/deepseek-harness/discussions/7649) [Bug] isQuotaExceededError wording table misses two real quota shapes: AllocationQuota.FreeTierOnly and in arrears
-- [#6964](https://github.com/deepseek-ai/deepseek-harness/discussions/6964) [Bug] claimed 的输入在 prepareRequest 抛错时会永久丢失：本机 154 份存档里 14 例
+- [#7772](https://github.com/deepseek-ai/deepseek-harness/discussions/7772) [Bug] Cookbook still teaches the retired plugin message source; on 0.1.7+ following it fails the whole turn with "format v4 message requires a producer-owned source kind"
+- [#4549](https://github.com/deepseek-ai/deepseek-harness/discussions/4549) [Bug] Scheduler failure leaves dangling tool/call — session permanently returns 400 INVALID_REQUEST (fix: append only the missing tool/result, #4017 follow-up)
+- [#7785](https://github.com/deepseek-ai/deepseek-harness/discussions/7785) BUG: generated desktop dev bundle cannot cold start — launcher omits DSH_DESKTOP_PRIMARY_RUNTIME_DIR
+- [#7782](https://github.com/deepseek-ai/deepseek-harness/discussions/7782) [Bug] Workspace registry becomes inconsistent after deleting workspace  4.
+- [#7115](https://github.com/deepseek-ai/deepseek-harness/discussions/7115) [Bug] Host enters a CPU-bound loop and blocks the event loop when a turn starts in a large session (~700k+ tokens)
+- [#7770](https://github.com/deepseek-ai/deepseek-harness/discussions/7770) [Bug][0.1.7-rc.2] Cold sessions with no projcache record render as the workspace folder name — every such conversation in one workspace becomes identically named
+- [#7761](https://github.com/deepseek-ai/deepseek-harness/discussions/7761) [bug] bash tool stop working when /tmp full
+- [#6539](https://github.com/deepseek-ai/deepseek-harness/discussions/6539) [Bug] Plugin/profile composition drift only surfaces as a fatal crash on the next boot — needs preflight validation and a dsh profile doctor
+- [#158](https://github.com/deepseek-ai/deepseek-harness/discussions/158) Bug: 编排workflow 之后点击展开之后没法收起
+- [#6659](https://github.com/deepseek-ai/deepseek-harness/discussions/6659) [Bug] 低并发场景下频繁出现服务器繁忙与turn error，零点时段规律性服务中断
+- [#2977](https://github.com/deepseek-ai/deepseek-harness/discussions/2977) [BUG]历史加载失败：Failed to fetch（internal）
+- [#7709](https://github.com/deepseek-ai/deepseek-harness/discussions/7709) [Bug] Windows: the workspace Low integrity label also lowers the user's own launches from that tree, silently degrading the toolchain inside it
+- [#7658](https://github.com/deepseek-ai/deepseek-harness/discussions/7658) [Bug] 会话格式迁移后 dsh_session_log 水位失效：每次请求重发整份日志 → 413 且永久卡死
+- [#7701](https://github.com/deepseek-ai/deepseek-harness/discussions/7701) [Bug] 0.1.7-rc.1：首次切换推理档位后 sessionController 失效，后续切换失败
+- [#7751](https://github.com/deepseek-ai/deepseek-harness/discussions/7751) [Bug] 0.1.7-rc.1: a required MCP server (failOnStartupError: true) that fails to start no longer stops dsh
+- [#7719](https://github.com/deepseek-ai/deepseek-harness/discussions/7719) [Bug][Desktop] subagent-codex spawns process.execPath without ELECTRON_RUN_AS_NODE — codex provider always fails with "app-server protocol stream closed"
+- [#6454](https://github.com/deepseek-ai/deepseek-harness/discussions/6454) [Bug] dsh-llm-pi-ai: discoverModels 对目录内置 provider 直接短路，"获取可用模型"永远拿不到新模型（opencode-go / deepseek-v4.1-flash 为例）
+- [#7720](https://github.com/deepseek-ai/deepseek-harness/discussions/7720) [Bug Report] Windows: workspace ACL with Modify-only (no WRITE_OWNER) makes the ACL sandbox fail at init, disabling all shell tools
+- [#7732](https://github.com/deepseek-ai/deepseek-harness/discussions/7732) [bug] Windows workspace-write 沙箱下执行 npm 包装的 CLI 永久阻塞，并把整个 dsh web 进程拖死
+- [#7731](https://github.com/deepseek-ai/deepseek-harness/discussions/7731) [Bug] 工作区快照超时后仍随每条新消息重试，反复阻塞工具执行
+- [#7721](https://github.com/deepseek-ai/deepseek-harness/discussions/7721) [Bug] 宿主进程内引入 userland undici 8.11.0 会覆写 Node 内置 fetch 的全局调度槽位：Node 24.13.0（内置 undici 7.18.2）上丢失 content-encoding 解压，直连 fetch 的插件拿到裸 gzip
+- [#6550](https://github.com/deepseek-ai/deepseek-harness/discussions/6550) [Bug] 安卓语音输入：输入法组字里带换行时，输入框只落地一部分文本（首段整段丢失）
+- [#7669](https://github.com/deepseek-ai/deepseek-harness/discussions/7669) [Bug] 0.1.7-rc.1 待审计划卡片丢失「查看全文」且不再自动打开（slot 条目被永久退役）
+- [#7330](https://github.com/deepseek-ai/deepseek-harness/discussions/7330) [Bug] dsh causes massive macOS Swap explosion (300GB+ System Data / 191GB kernel_task) even when using API-only mode
 - [#7646](https://github.com/deepseek-ai/deepseek-harness/discussions/7646) [Bug] Windows: after upgrading to 0.1.7-rc.1 every shell command fails at the ACL grant with `SetNamedSecurityInfoW failed (Win32 5): grantWrite(<workspace>)` / 升级到 0.1.7 后所有 shell 命令在沙箱授权阶段立即失败（粘性，需手工修 ACL）
-- [#7647](https://github.com/deepseek-ai/deepseek-harness/discussions/7647) [Bug] 移动端：切换长会话后首分钟主线程 longtask（会话正文无窗口化 + Shiki 高亮无有效预算）
-- [#5787](https://github.com/deepseek-ai/deepseek-harness/discussions/5787) [Bug] Markdown table: overflow is decided by column count, and the scrollbar is hidden until hover so wide columns become unreachable
-- [#7642](https://github.com/deepseek-ai/deepseek-harness/discussions/7642) [Bug] Agent Teams bundle 在 Web/Desktop 未禁用 subagent：子代理不在 Team roster，list_agents/send_message 找不到也联系不上
-- [#7640](https://github.com/deepseek-ai/deepseek-harness/discussions/7640) [Bug] Los modelos de proveedores personalizados (Custom provider) no se cargan en el selector de la pantalla principal (Windows, v0.1.5-rc.3)
-- [#7632](https://github.com/deepseek-ai/deepseek-harness/discussions/7632) [bug] 上下文超长被误判成普通 API 错误：自动压缩 124 次失败 102 次，会话永久卡死
-- [#7380](https://github.com/deepseek-ai/deepseek-harness/discussions/7380) [bug] grep/glob tools silently skip symlinked directories (ripgrep spawned without --follow)
-- [#7630](https://github.com/deepseek-ai/deepseek-harness/discussions/7630) [Bug] One plugin with a pre-e459e32637 typert manifest withdraws every typert definition — web UI unusable (session/control: definition-unavailable)
-- [#7629](https://github.com/deepseek-ai/deepseek-harness/discussions/7629) [Bug] DSH Desktop advanced 模式禁用 ui-layout，导致手机/远程等不带 ?dsh-desktop-mode=advanced 的 Web 客户端完全无法加载（附根因定位与修复方向）
-- [#7542](https://github.com/deepseek-ai/deepseek-harness/discussions/7542) [Bug] latest (0.1.5-rc.2) fails to boot on a clean install: dsh-sandbox-local is not resolved
-- [#6552](https://github.com/deepseek-ai/deepseek-harness/discussions/6552) [Bug] 安卓语音输入：输入法组字里带换行时，输入框只落地一部分文本（首段整段丢失）
-- [#3835](https://github.com/deepseek-ai/deepseek-harness/discussions/3835) [BUG] git 源插件安装后 bundle 组合异常，工具层空结果致会话循环且恢复后无响应
-- [#1307](https://github.com/deepseek-ai/deepseek-harness/discussions/1307) [Bug] rc.6: Cannot create a session under 'Unassigned' (\u672a\u5206\u7ec4) after creating a workspace
-- [#425](https://github.com/deepseek-ai/deepseek-harness/discussions/425) [BUG]Windows 下 edit/write 覆盖已有文件:`ReplaceFileW EIO (Win32 32)`(ERROR_SHARING_VIOLATION)高频失败,无重试机制
-- [#5976](https://github.com/deepseek-ai/deepseek-harness/discussions/5976) [Bug] Agent 在超长上下文 + max reasoning effort 下陷入思考退化循环：回合零产出、无自动熔断，需手动中止（v4.1-flash；同配置 v4-flash 3000+ 步未复发）
-- [#201](https://github.com/deepseek-ai/deepseek-harness/discussions/201) [BUG] spamming Error: sandbox escalation to "workspace-write" is not strictly wider than this call's current "danger-full-access" mode
-- [#7625](https://github.com/deepseek-ai/deepseek-harness/discussions/7625) [Bug][DSH Desktop 2.0.13] 已保存的 DeepSeek API 密钥无法删除，导致网络搜索优先走 DeepSeek 并报错
-- [#7624](https://github.com/deepseek-ai/deepseek-harness/discussions/7624) [Bug][DSH Desktop 2.0.13] 调整窗口尺寸后已打开的悬浮窗/弹窗不重新居中（macOS）
-- [#6138](https://github.com/deepseek-ai/deepseek-harness/discussions/6138) [Bug] 输入法拼音未上屏时，输入框自动填充乱码汉字
+- [#7717](https://github.com/deepseek-ai/deepseek-harness/discussions/7717) [Bug] macOS Desktop：⌃⌘F 全屏快捷键未绑定，双击窗口顶部也无法缩放/填满屏幕（缺少基本窗口交互入口）
+- [#7718](https://github.com/deepseek-ai/deepseek-harness/discussions/7718) [Bug] macOS Desktop：双击窗口顶部不会缩放/填满屏幕（标题栏隐藏 + 客户端只实现了拖动，没有缩放通道）
+- [#6733](https://github.com/deepseek-ai/deepseek-harness/discussions/6733) [Bug] dsh-web-fetch-http：connect EACCES 时未处理的 'error' 事件导致整个 dsh 进程崩溃（Windows）
+- [#7713](https://github.com/deepseek-ai/deepseek-harness/discussions/7713) [Bug] macOS Desktop：stdio MCP 服务器静默起不来 —— GUI 宿主 PATH 不含 homebrew，靠 shebang 找 node 的命令必然失败
+- [#7708](https://github.com/deepseek-ai/deepseek-harness/discussions/7708) [Bug] v0.1.7-rc.1在内网/离线环境下 pnpm install 因 cdn.sheetjs.com 域名无法解析而失败
+- [#7707](https://github.com/deepseek-ai/deepseek-harness/discussions/7707) [BUG]:最终回复被思考块吞掉
+- [#7702](https://github.com/deepseek-ai/deepseek-harness/discussions/7702) [Bug] 工作区选择根目录后无法在该工作区创建对话，并跳转至其他工作区
+- [#7682](https://github.com/deepseek-ai/deepseek-harness/discussions/7682) [Bug] Web 插件管理页在读取失败后一直显示“正在读取插件…”
+- [#7692](https://github.com/deepseek-ai/deepseek-harness/discussions/7692) [bug] Windows 下 NPM_CONFIG_CACHE 盘符路径大小写不兼容
+- [#7123](https://github.com/deepseek-ai/deepseek-harness/discussions/7123) [bug]「只有 reasoning、无可见正文也无工具调用」的响应被判为成功 ⇒ 静默空回复
 - [#7622](https://github.com/deepseek-ai/deepseek-harness/discussions/7622) [Bug] Windows: `windows-acl` rung is auto-selected without a probe, but its host-side write grant always fails without SeSecurityPrivilege
-- [#7436](https://github.com/deepseek-ai/deepseek-harness/discussions/7436) [Bug] dsh@0.1.5-rc.2 / rc.3 not installable: missing @deepseek-ai/dsh-client-ui-sidebar-documentpreview@0.1.5-rc.3
-- [#6870](https://github.com/deepseek-ai/deepseek-harness/discussions/6870) [Bug] Web client: a persisted view-store payload missing a newly added field crashes the whole sidebar.workspaces slot
-- [#5095](https://github.com/deepseek-ai/deepseek-harness/discussions/5095) [Bug] In-process subagents cannot write under inherited workspace-write because escalation fields remain exposed
-- [#7621](https://github.com/deepseek-ai/deepseek-harness/discussions/7621) [BUG] 0.1.1-rc.2 Web 输入框：切换会话时按键可能被静默丢弃（字进了 DOM 却始终不显示）；附两处会话选择问题
-- [#223](https://github.com/deepseek-ai/deepseek-harness/discussions/223) [bug] @deepseek-ai/dsh 发布包依赖图缺陷:cordis 反向 peer 依赖自己的插件,互相成环,严格解析器无法安装
-- [#1315](https://github.com/deepseek-ai/deepseek-harness/discussions/1315) [Bug] 项目目录迁移后 dsh 启动崩溃（corrupt session log），希望支持会话重新归属
-- [#7616](https://github.com/deepseek-ai/deepseek-harness/discussions/7616) [BUG] 修改文件会生成tmp锁定文件导致其它进程的文件监听奔溃
-- [#6217](https://github.com/deepseek-ai/deepseek-harness/discussions/6217) Bug: Web GUI file preview shows "file resource service unavailable" on Chromium <= 125 — protocolOf() relies on WHATWG URL host parsing for a non-special scheme
-- [#6328](https://github.com/deepseek-ai/deepseek-harness/discussions/6328) [Bug] One unmigratable v0 artifact (subagent/descriptor v2) disables all content search
-- [#5715](https://github.com/deepseek-ai/deepseek-harness/discussions/5715) [bug] 403 quota exhaustion shown as "API key is invalid": every AUTH-coded failure swallows the real message
-- [#5628](https://github.com/deepseek-ai/deepseek-harness/discussions/5628) [Bug] single-exe Web boot loses dsh.client metadata behind moduleFallback proxies
-- [#3222](https://github.com/deepseek-ai/deepseek-harness/discussions/3222) [Bug] HTTP 403 授权拒绝被归类为 AUTH，UI 显示 "API key is invalid"，原始错误不可见
-- [#7309](https://github.com/deepseek-ai/deepseek-harness/discussions/7309) [Bug] fork 会继承源会话 fork 点的下一条输入，新会话第一次输入执行的是它
-- [#7602](https://github.com/deepseek-ai/deepseek-harness/discussions/7602) [Bug] Web UI incorrectly renders Markdown list containing package references
-- [#7593](https://github.com/deepseek-ai/deepseek-harness/discussions/7593) [Bug] Windows + npm global install: dsh web cannot boot — duplicate physical copies of @deepseek-ai/dsh-win32-process trigger koffi "Duplicate type name 'DSH_STARTUPINFOW'", and a create-then-check HMR race exits right after printing the URL
-- [#7591](https://github.com/deepseek-ai/deepseek-harness/discussions/7591) [Bug] 0.1.7 空白新会话遇到 writer-held 时会静默换新会话，未发送的草稿随之“消失”
-- [#7534](https://github.com/deepseek-ai/deepseek-harness/discussions/7534) [Bug] 0.1.7-alpha.1 and alpha.2: a failed startup still consumes settings.yaml - legacy sections import into a disposed context and are lost permanently
-- [#7302](https://github.com/deepseek-ai/deepseek-harness/discussions/7302) [Bug][Web client] Safari/WebKit：浮层内点击被 onBlur 吞掉（relatedTarget === null）/ clicks inside portaled panels are swallowed when relatedTarget is null
-- [#7442](https://github.com/deepseek-ai/deepseek-harness/discussions/7442) [Bug] WebKit（Safari / WKWebView）里 composer 模型菜单点选无效，session/selectModel 不会发出
-- [#7517](https://github.com/deepseek-ai/deepseek-harness/discussions/7517) [BUG] Workspace-write 沙箱缺陷：受限进程可通过工作区内的目录 Junction 删除工作区外文件
-- [#1216](https://github.com/deepseek-ai/deepseek-harness/discussions/1216) [Bug] 复制消息时出现多余换行符（视觉折行被误复制为 \n）
-- [#1490](https://github.com/deepseek-ai/deepseek-harness/discussions/1490) [Bug][Windows sandbox] tempfile.mkdtemp creates unwritable directories
-- [#2499](https://github.com/deepseek-ai/deepseek-harness/discussions/2499) [Bug] 调用文件/搜索工具时触发 'Cannot read properties of undefined (reading 'prepare')' 并导致会话污染 (tool_calls 悬空)
-- [#7567](https://github.com/deepseek-ai/deepseek-harness/discussions/7567) [Bug Report] windows-acl: hook commands silently fail because `workspaceRoot` falls back to `process.cwd()` (elevated launch → C:/Windows/System32)
-- [#7565](https://github.com/deepseek-ai/deepseek-harness/discussions/7565) [Bug] revealNativePath does nothing on paths containing non-ASCII characters (e.g. CJK) - and reports success
-- [#7471](https://github.com/deepseek-ai/deepseek-harness/discussions/7471) [Bug] 内测声明弹窗在设置写入失败时永久锁死界面（无任何逃生口）
-- [#860](https://github.com/deepseek-ai/deepseek-harness/discussions/860) [Bug Report] 欢迎弹窗（内测声明）在 settings 写入被拒时把用户永久锁死：无法关闭、只能无限重试"暂时无法保存确认状态，请重试"
-- [#7547](https://github.com/deepseek-ai/deepseek-harness/discussions/7547) [bug]安装完，打不开
-- [#7502](https://github.com/deepseek-ai/deepseek-harness/discussions/7502) [BUG] web_search always fails: "DeepSeek returned an unprocessable response body" (brotli not decoded under custom undici dispatcher)
-- [#7541](https://github.com/deepseek-ai/deepseek-harness/discussions/7541) Bug: llm-deepseek reports reasoning.efforts from the connection, not the model
-- [#7538](https://github.com/deepseek-ai/deepseek-harness/discussions/7538) [BUG REPORT] Windows 沙箱无法在用户自建目录上 provision 工作区 ACE → 该目录下所有 shell 命令失败
-- [#7537](https://github.com/deepseek-ai/deepseek-harness/discussions/7537) [Bug][Windows] skill-filesystem crashes dsh web when a custom skill root contains an inaccessible directory
+- [#7398](https://github.com/deepseek-ai/deepseek-harness/discussions/7398) Bug: tool calls fail with "Cannot read properties of undefined (reading 'prepare')" when running from source (pnpm dsh web)
+- [#7138](https://github.com/deepseek-ai/deepseek-harness/discussions/7138) [Bug] Turn changed-files card attributes a concurrent writer's changes to this session (workspace-wide git snapshot, no per-session attribution)
+- [#7677](https://github.com/deepseek-ai/deepseek-harness/discussions/7677) [Bug] Firefox 特有：会话历史在"载入历史…"处无限卡住
+- [#4178](https://github.com/deepseek-ai/deepseek-harness/discussions/4178) [BUG] 两个 dsh web 实例并发打开同一会话，导致会话日志 seq 冲突、历史记录损坏
+- [#6144](https://github.com/deepseek-ai/deepseek-harness/discussions/6144) [Bug] v0→v1 迁移对单条不合规历史记录整体拒载，导致旧会话永久打不开 / Whole-log refusal on one non-conforming legacy record
 - [#7493](https://github.com/deepseek-ai/deepseek-harness/discussions/7493) [BUG] Code block copy button fails with execCommand error; manual selection escapes block when overflow is active
-- [#7533](https://github.com/deepseek-ai/deepseek-harness/discussions/7533) [Bug] 解析拦截器对只读 stack 赋值抛 TypeError，导致全部插件元信息报错（v0.1.7-alpha.2 / tsx 启动）
-- [#2763](https://github.com/deepseek-ai/deepseek-harness/discussions/2763) [Bug Report] 包族 npm dist-tag `latest` 不一致：全新项目按默认版本安装必然 ERESOLVE（0.0.1-rc.1 的 peer 引用已不存在的包名）
-- [#7531](https://github.com/deepseek-ai/deepseek-harness/discussions/7531) [Bug][Recovery] Crash recovery loses host termination provenance (signal / exit cause)
-- [#7527](https://github.com/deepseek-ai/deepseek-harness/discussions/7527) [Bug] Session stuck on "Loading history…" forever when the connection generation changes during an in-flight open
-- [#7524](https://github.com/deepseek-ai/deepseek-harness/discussions/7524) [Bug] Windows + 微软拼音：composer 输入法合成被立即终止——每敲一个字母候选就被上屏，中文无法输入
-- [#7523](https://github.com/deepseek-ai/deepseek-harness/discussions/7523) [Bug] Windows: all subprocess tools fail with 0xC0000142 — probeWindowsJob never verifies the runner can actually start
-- [#7520](https://github.com/deepseek-ai/deepseek-harness/discussions/7520) [Bug] Switching models mid-session can trigger false pi-ai context overflow
-- [#7363](https://github.com/deepseek-ai/deepseek-harness/discussions/7363) Bug: "Cannot read properties of undefined (reading 'kind')" when a plugin calls agent.followup() with a bare string
-- [#7340](https://github.com/deepseek-ai/deepseek-harness/discussions/7340) [Bug] 0.1.6-alpha.2版本交互bug，点击新会话按钮下面的插件按钮，然后点击收起侧边栏按钮，然后就回不到会话了，只能退出进程
-- [#7516](https://github.com/deepseek-ai/deepseek-harness/discussions/7516) [Bug] 新建会话选工作区静默失效：Host 每次都建成空白会话、UI 零反应零日志，整页刷新才恢复（openWorkspace 的 navigation.aborted 分支）
-- [#4403](https://github.com/deepseek-ai/deepseek-harness/discussions/4403) [Bug] WebUI 首次加载较长历史对话报「历史加载失败：signal timed out (internal)」
-- [#7450](https://github.com/deepseek-ai/deepseek-harness/discussions/7450) [Bug] Windows: reveal (在文件资源管理器中显示无效) "Show in File Explorer" has no effect
-- [#3963](https://github.com/deepseek-ai/deepseek-harness/discussions/3963) [BUG] 升级 0.1.1-rc 后 Web 每轮 agent run 失败(registration.adapter.reprepareCall is not a function)；Desktop 卡 Loading
-- [#3808](https://github.com/deepseek-ai/deepseek-harness/discussions/3808) [BUG] rc.8 复现:prepare 崩溃后会话永久卡死 400
-- [#7505](https://github.com/deepseek-ai/deepseek-harness/discussions/7505) [BUG]  前端渲染bug，对话框会因为手动展开思考过程后滚动鼠标而错位
-- [#7478](https://github.com/deepseek-ai/deepseek-harness/discussions/7478) [bug]0.17无法安装
-- [#7499](https://github.com/deepseek-ai/deepseek-harness/discussions/7499) [BUG]pnpm dsh web：首次工具调用失败，提示“Cannot read properties of undefined (reading 'prepare')”，并导致会话永久中断
-- [#7500](https://github.com/deepseek-ai/deepseek-harness/discussions/7500) [Bug] npx install fails with ETARGET: missing documentpreview@0.1.5-rc.3
-- [#7394](https://github.com/deepseek-ai/deepseek-harness/discussions/7394) [Bug] Second `@deepseek-ai/dsh-scope` instance from a profile plugin workspace registers preset personas unscoped, colliding with `deployment:persona` (rc.8: `deployment:persona`; master: `deployment:persona-prefix`/`-suffix`)
-- [#7448](https://github.com/deepseek-ai/deepseek-harness/discussions/7448) [Bug] 0.1.5-rc.* 中任意一个版本都装不上：rc.3 是一次未完成的发布
-- [#7367](https://github.com/deepseek-ai/deepseek-harness/discussions/7367) [Bug] dsh-app://shell/* documents return 404: update dialog renders blank, main window stays unclickable and blurred
-- [#7393](https://github.com/deepseek-ai/deepseek-harness/discussions/7393) [Bug] Blank sessions disappear from session list when navigating to another session
-- [#7484](https://github.com/deepseek-ai/deepseek-harness/discussions/7484) [Bug] Web UI "Open configuration file" fails on headless server when transport ownsHost=true (K8s / Ingress)
-- [#7470](https://github.com/deepseek-ai/deepseek-harness/discussions/7470) [Bug] 新建终端 shell 菜单出现两个同名 bash（/bin/bash 与 /usr/bin/bash）
-- [#7469](https://github.com/deepseek-ai/deepseek-harness/discussions/7469) [Bug] Welcome notice modal permanently locks the UI when settings write fails (no escape hatch)
-- [#7466](https://github.com/deepseek-ai/deepseek-harness/discussions/7466) [Bug] 0.1.7-alpha.1 展开“正在分析请求”后出现大面积空白滚动区（附一行修复）
-- [#7463](https://github.com/deepseek-ai/deepseek-harness/discussions/7463) [Bug] Anthropic Messages 协议下模型列表只显示 id，不显示已解析的 display_name
-- [#7325](https://github.com/deepseek-ai/deepseek-harness/discussions/7325) [Bug][desktop] macOS nightly update feed is missing on the test deployment — dsh-desk/feeds/mac-arm64/nightly-mac.yml returns COS NoSuchKey
-- [#7435](https://github.com/deepseek-ai/deepseek-harness/discussions/7435) [BUG] v0.1.7-alpha.1 dsh: cannot resolve profile bundle "@deepseek-ai/dsh-experimental-agent-team-web-profile
-- [#7438](https://github.com/deepseek-ai/deepseek-harness/discussions/7438) [BUG] @deepseek-ai/dsh@0.1.5-rc.2 fails to install: ETARGET for @deepseek-ai/dsh-client-ui-sidebar-documentpreview@^0.1.5-rc.3
-- [#7079](https://github.com/deepseek-ai/deepseek-harness/discussions/7079) [Bug] pnpm dsh web 从源码启动时工具调用全线崩溃：tsx/esm 加载 TS 源码与插件加载编译产物导致 TOOL_RUNTIME_SCHEDULER Symbol 分裂 （Cannot read properties of undefined (reading 'prepare')）
-- [#7428](https://github.com/deepseek-ai/deepseek-harness/discussions/7428) [Bug] Official npm quickstart fails with ETARGET: missing sidebar-documentpreview@^0.1.5-rc.3
-- [#7426](https://github.com/deepseek-ai/deepseek-harness/discussions/7426) [BUG] Windows: clicking a `~`-prefixed path fails — native opener does not expand the tilde
-- [#5677](https://github.com/deepseek-ai/deepseek-harness/discussions/5677) [Bug] Web UI history never loads on Firefox-engine browsers (infinite "Loading history…") — Firefox-only failure in lossless-JSON validation
 
 ## 📋 官方名单配置
 _当前 logins_: `chinesezjc, creatixchu, geeeekexplorer, imccyu, j-xiang, kermanx, kingwl, leggasai, lsdsjy, pku-xht, shigma, tianyicui, turtle1999, yifandingd, yifffan, zdaxie`
 _当前 orgs_: `deepseek-ai`
 _编辑 `maintainers.json` 或新建 `maintainers.local.json` 后提交触发新一轮扫描即可生效。_
 
-_Last updated: 2026-09-24T02:37:47.904Z_
+_Last updated: 2026-09-25T02:55:13.445Z_
