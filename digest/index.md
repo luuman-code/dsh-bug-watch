@@ -1,63 +1,70 @@
-# DSH Bug Watch — 2026-10-21
+# DSH Bug Watch — 2026-10-22
 
 **目标仓库**: [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness/discussions)
-**本次扫描 Bug 类讨论数**: 44
+**本次扫描 Bug 类讨论数**: 52
 
 ## 🏛️ 官方参与 — committer 互动（采纳答案 / 评论 / 合并 PR）
 _（无）_
 
 ## 👥 社区参与 — 已采纳答案，作者非 committer
-_（无）_
+- [#10513](https://github.com/deepseek-ai/deepseek-harness/discussions/10513) **[Bug] workspace.json 的 sessionIds 被静默截断，重启后历史会话从侧边栏消失**<br/>  分类：Q&A · 标签：— · 最近更新：2026-10-21
 
 ## 📝 仅报告 — 无人互动
-- [#8123](https://github.com/deepseek-ai/deepseek-harness/discussions/8123) [bug] Auto review 在 step-5-preview 下 reviewer 返回正文加 tool_call 标记而非 JSON，导致会话所有工具调用被拒（与 #7773 同后果、不同根因）
-- [#10475](https://github.com/deepseek-ai/deepseek-harness/discussions/10475) [Bug] Cordis loader fails to import a valid ESM plugin entry point (failed to import)
-- [#9248](https://github.com/deepseek-ai/deepseek-harness/discussions/9248) [Bug] app-boot resolver requires node-addon-require-builtin unconditionally — fatal on Android, while hmr already has the --expose-internals fallback
-- [#10468](https://github.com/deepseek-ai/deepseek-harness/discussions/10468) [Bug] Session "Cache hit" pill is integer-only: 98.9% renders as "99%", while the per-turn panel shows 99.8%
+- [#10599](https://github.com/deepseek-ai/deepseek-harness/discussions/10599) [Bug] PreToolUse is not dispatched for tool calls carrying `sandbox_permissions`
+- [#10605](https://github.com/deepseek-ai/deepseek-harness/discussions/10605) [Bug] Kylin V10 / Chromium 128: three client-side failures (dsh-resource protocol, PDF worker features, session-log download)
+- [#10604](https://github.com/deepseek-ai/deepseek-harness/discussions/10604) [Bug] --dump-config shows telemetry enabled when DSH_TELEMETRY_DISABLED is set (0.2.1-rc.2)
+- [#10603](https://github.com/deepseek-ai/deepseek-harness/discussions/10603) [Bug] 桌面端内嵌 webview 里「消息复制」静默失败：宿主租约 session 拒绝 clipboard 权限 + writeClipboard 缺少 execCommand 兜底
+- [#10600](https://github.com/deepseek-ai/deepseek-harness/discussions/10600) [Bug] 0.2.1-rc.2: `--help` constructs services after teardown ("cannot create effect on inactive context", 22 errors, hidden without a console logger)
+- [#10563](https://github.com/deepseek-ai/deepseek-harness/discussions/10563) [Bug] tool_addition blocks can only be in system messages — 会话中途技能/工具目录变化后，该会话在 Anthropic 官方端永久 400 INVALID_REQUEST
+- [#10596](https://github.com/deepseek-ai/deepseek-harness/discussions/10596) [Bug] Settings closes when archiving the current chat activates automatic onboarding (0.2.1-rc.2)
+- [#10569](https://github.com/deepseek-ai/deepseek-harness/discussions/10569) [Bug][Safety] DSH 0.2.1-rc.2: cleanup command expanded to C:/ root and deleted user files
+- [#10574](https://github.com/deepseek-ai/deepseek-harness/discussions/10574) [Bug] showing wrong error when API is inaccessible.
+- [#10567](https://github.com/deepseek-ai/deepseek-harness/discussions/10567) [bug] Windows 上 job_kill 只终止顶层 shell，子进程变孤儿继续运行
+- [#10565](https://github.com/deepseek-ai/deepseek-harness/discussions/10565) [Bug] lsp-stdio 认不出 WindowsApps 的 pwsh（App Execution Alias），一条配置让整个 LSP 挂掉
+- [#10560](https://github.com/deepseek-ai/deepseek-harness/discussions/10560) [Bug] Plugin shadowing and the 431 cookie overflow chain: the recovery dialog is a restart loop, so one evening of plugin debugging burns the ~70-launch cookie budget
+- [#10558](https://github.com/deepseek-ai/deepseek-harness/discussions/10558) [Bug] 输入框打 / 打开命令菜单时主线程出现一次约 83 ms 长任务
+- [#10559](https://github.com/deepseek-ai/deepseek-harness/discussions/10559) [Bug] 0.2.1-rc.2 / Windows 11: host 以 0xFFFF7003 (4294930435) 静默退出，三次冷启动 3/3 必现，无堆栈、无 hostDiagnostic、无 WER 记录
+- [#9882](https://github.com/deepseek-ai/deepseek-harness/discussions/9882) [Bug] A restored session that still carries the durable "auto" preset makes permission-presets throw in its constructor, leaving auto-review pending — "2 entries did not activate"
+- [#10489](https://github.com/deepseek-ai/deepseek-harness/discussions/10489) [Bug] agent.cancel() 传入 union 外的 kind 会让 turn/end 落盘 reason:null，导致会话永久白屏
+- [#10554](https://github.com/deepseek-ai/deepseek-harness/discussions/10554) [Bug] macOS 桌面端把 4 个文件写进已签名的 app bundle，导致代码签名封条失效（0.2.1-rc.1 mac-x64）
+- [#10552](https://github.com/deepseek-ai/deepseek-harness/discussions/10552) [bug]目前dsh的webui的设置在手机端竖屏无法正常使用，需要切换到横屏
+- [#10551](https://github.com/deepseek-ai/deepseek-harness/discussions/10551) [Bug] `grep` reports "produced more raw output than the subprocess" — retained-output limit surfaces as a separate failure
+- [#10503](https://github.com/deepseek-ai/deepseek-harness/discussions/10503) [Bug] `grep`/`glob` tools turn a partially-successful search into a whole failure on unreadable directories
 - [#10467](https://github.com/deepseek-ai/deepseek-harness/discussions/10467) [Bug] Workspace loses session accounting after a host crash/relaunch (sessions fall into "Ungrouped", no way to re-attach)
-- [#10463](https://github.com/deepseek-ai/deepseek-harness/discussions/10463) [Bug] Windows ACL sandbox: Low integrity label is applied only to the workspace root and does not inherit to existing subdirectories
-- [#10462](https://github.com/deepseek-ai/deepseek-harness/discussions/10462) [Bug] open-in-app returns 502 for all Electron-based editors (Cursor / VS Code / Windsurf) — scrubbedParentEnv() leaks ELECTRON_RUN_AS_NODE=1
-- [#10203](https://github.com/deepseek-ai/deepseek-harness/discussions/10203) [Bug Report] patch-injected "skill-filesystem" row without "name" is silently disabled by preflight
-- [#10458](https://github.com/deepseek-ai/deepseek-harness/discussions/10458) [Bug] Nested dsh-app-boot copy checks plugin compatibility against its own version, not the running launcher
-- [#9710](https://github.com/deepseek-ai/deepseek-harness/discussions/9710) [Bug][Desktop/Win] 启动后约 80 秒单核满载 + 约 900 MB 读取：dsh-settings describe() 每次调用都重算整个 profile 组合
-- [#10457](https://github.com/deepseek-ai/deepseek-harness/discussions/10457) [Bug][0.2.1-rc.2 / Windows] 任务看板任何卡片运行立即失败：Cannot read properties of undefined (reading 'signal')，未创建任何会话
-- [#10454](https://github.com/deepseek-ai/deepseek-harness/discussions/10454) [Bug] 持久终端：开启「持久 Shell 后端 (pwsh)」必失败——两行共用 PTY backendType `shell`
-- [#10452](https://github.com/deepseek-ai/deepseek-harness/discussions/10452) [Bug] Windows: "Manage dsh Command…" always fails with "Command-manager process failed." — ESM worker ships without a package.json
-- [#1497](https://github.com/deepseek-ai/deepseek-harness/discussions/1497) Bug: corrupt session log after unclean exit — replayed events cause seq gap in committed region, history unrecoverable
-- [#10443](https://github.com/deepseek-ai/deepseek-harness/discussions/10443) [bug] 鼠标第 4、5 键可在已完成的启动画面与工作画面之间来回切换
-- [#9957](https://github.com/deepseek-ai/deepseek-harness/discussions/9957) [Bug] 设置 → 通用设置 → 权限：默认权限预设永远保存不了 —— revision 校验落在插件树 reload 之后，且客户端把冲突静默抹掉（master 687f282e 仍在）
-- [#10440](https://github.com/deepseek-ai/deepseek-harness/discussions/10440) [bug] 离线补标题写坏会话日志的三个变体，以及一条被漏掉的校验：`session/title.messageSeqs` 引用了非用户消息
-- [#5630](https://github.com/deepseek-ai/deepseek-harness/discussions/5630) Bug: Chinese IME (Microsoft Pinyin) input corrupted in the Web GUI chat composer
-- [#10431](https://github.com/deepseek-ai/deepseek-harness/discussions/10431) [Bug] macOS 从 QQ/飞书复制图片粘贴：图片能进附件栏，但文件名被当成文本同时插入 composer（缺少 text/file 仲裁）
-- [#9830](https://github.com/deepseek-ai/deepseek-harness/discussions/9830) [Bug] 代理变量大小写重复导致 Windows 上 .NET 子进程启动全面失效 / Duplicate-cased proxy vars break every .NET child-process launch on Windows
-- [#9699](https://github.com/deepseek-ai/deepseek-harness/discussions/9699) [Bug] ReactLoopAgent.cancel() does not validate cause at entry, writing {"reason":null} on turn/end and permanently crashing Chat UI
-- [#9653](https://github.com/deepseek-ai/deepseek-harness/discussions/9653) [Bug] Windows: boot-time corpus scan exhausts process fd limit (EMFILE) and leaves a permanent empty .lock that blocks every later boot
-- [#9206](https://github.com/deepseek-ai/deepseek-harness/discussions/9206) [Bug] 慢链路下 mux 心跳掐断 WebSocket，前端反复重连重放 MB 级历史，侧栏会话标题在真名与「未命名」间闪动
-- [#9028](https://github.com/deepseek-ai/deepseek-harness/discussions/9028) [Bug] Desktop: after background reconnect every sidebar session title flashes to "未命名" (untitled) — projection stores cleared before refresh backfills (0.2.0-rc.2)
-- [#10406](https://github.com/deepseek-ai/deepseek-harness/discussions/10406) [bug] 单条 tool-call 的 arguments 非法即整轮失败（MALFORMED_RESPONSE），建议隔离坏调用或自动重试
-- [#10412](https://github.com/deepseek-ai/deepseek-harness/discussions/10412) [Bug] OpenCode 免费模型 ID 解析错误导致 403，且错误被误映射为“API Key 无效”
-- [#9086](https://github.com/deepseek-ai/deepseek-harness/discussions/9086) [BUG](windows沙箱问题)(DSH GUI模式)会话里跑在非「完全权限」模式在项目文件夹根目录生成Windows 强制完整性标签，导致二进制生成文件权限受限
-- [#10162](https://github.com/deepseek-ai/deepseek-harness/discussions/10162) [Bug] open-in-app: VS Code (and every Electron app) cannot be launched on Windows — ELECTRON_RUN_AS_NODE leaks into the child environment
-- [#10349](https://github.com/deepseek-ai/deepseek-harness/discussions/10349) [Bug] 「打开方式」列出所有已注册处理器，选中非适用程序后助手进程永久挂起（Windows）
-- [#441](https://github.com/deepseek-ai/deepseek-harness/discussions/441) [Bug] Profile `cordis.yml` is rewritten non-atomically on every boot, so concurrent launches intermittently fail to load
-- [#10401](https://github.com/deepseek-ai/deepseek-harness/discussions/10401) [Bug] 安装版桌面端的 Web 界面说明仍按浏览器与 dsh web 开发流程书写（0.2.1-rc.2）
-- [#6437](https://github.com/deepseek-ai/deepseek-harness/discussions/6437) [Bug] dsh-client-resources 的 protocolOf 依赖 new URL().hostname，Edge 129 下文件预览显示“文件资源服务不可用”
-- [#10393](https://github.com/deepseek-ai/deepseek-harness/discussions/10393) [Bug] Desktop: task-panel member cards detach and float above all windows after macOS fullscreen toggle, blocking global mouse input
-- [#10394](https://github.com/deepseek-ai/deepseek-harness/discussions/10394) [Bug] Plugins page loses the four official settings entries (Shell / Agent loop / Subagent / Web search) on non-loopback origins
-- [#10382](https://github.com/deepseek-ai/deepseek-harness/discussions/10382) [Bug] Second copy of @deepseek-ai/dsh-scope / dsh-system-prompt in the profile node_modules blocks every new & resumed session (agent-preset/invalid, "deployment:persona-prefix" already registered)
-- [#10387](https://github.com/deepseek-ai/deepseek-harness/discussions/10387) [Bug] dsh-app-boot 0.2.1-rc.2：Profile 包里 require("punycode/") 导致导入崩溃（resolve.paths 返回 null）
-- [#10385](https://github.com/deepseek-ai/deepseek-harness/discussions/10385) [Bug] nono 沙箱下上传图片失败：附件插件会打开 `/` 做 fsync
-- [#8610](https://github.com/deepseek-ai/deepseek-harness/discussions/8610) [Bug] 桌面端侧栏：冷会话（未打开过）的标题一律显示"未命名"，投影缓存里的 title 行不被采用（0.2.0-rc.2）
-- [#9949](https://github.com/deepseek-ai/deepseek-harness/discussions/9949) [Bug] `subagent_codex` fails on any model newer than the pinned Codex CLI (0.153.4)
-- [#10294](https://github.com/deepseek-ai/deepseek-harness/discussions/10294) [Bug] Windows 桌面版 Open In → VS Code 必然失败（dsh web 正常）：ELECTRON_RUN_AS_NODE 泄漏到被启动的 launcher
+- [#6964](https://github.com/deepseek-ai/deepseek-harness/discussions/6964) [Bug] claimed 的输入在 prepareRequest 抛错时会永久丢失：本机 154 份存档里 14 例
+- [#10549](https://github.com/deepseek-ai/deepseek-harness/discussions/10549) [Bug] additionalProperties: false 只在声明里生效，派发时不校验
+- [#9289](https://github.com/deepseek-ai/deepseek-harness/discussions/9289) [Bug][高影响] 文档收尾期间 Stop 无法中断，消息注入与 /goal 无法启动下一轮（0.2.0-rc.2，附复现）
+- [#10548](https://github.com/deepseek-ai/deepseek-harness/discussions/10548) [Bug] dsh-mcp-client: server instructions over 32 KB never connect, and the real error is only in ctx.logger
+- [#10538](https://github.com/deepseek-ai/deepseek-harness/discussions/10538) [Bug] `dsh-plugin-manager`: one hung operation wedges the profile for every later install/remove, and the market reports it only as a spinner
+- [#8559](https://github.com/deepseek-ai/deepseek-harness/discussions/8559) [Bug] 同一工作目录下多个 Session 的「已更改文件」卡片互相认领对方的改动（附修复分支）
+- [#10539](https://github.com/deepseek-ai/deepseek-harness/discussions/10539) [Bug] DeepSeek adapter emits inline `role: "system"` `tool_addition` blocks → HTTP 400 that permanently breaks the session
+- [#10532](https://github.com/deepseek-ai/deepseek-harness/discussions/10532) [Bug] Settings write fails ("Failed to save settings") due to case-sensitivity mismatch in Windows installation path
+- [#10505](https://github.com/deepseek-ai/deepseek-harness/discussions/10505) [bug]所有依赖子进程的工具均不可用：Windows Job runner 以退出码 0 静默退出（runner 子进程未以 Node 模式启动）
+- [#10530](https://github.com/deepseek-ai/deepseek-harness/discussions/10530) [Bug] Windows workspace-write 沙箱下任何子进程都启动即失败（exit 0xC0000142 / STATUS_DLL_INIT_FAILED）
 - [#9924](https://github.com/deepseek-ai/deepseek-harness/discussions/9924) [Bug] Desktop "Web authentication failed": stale dsh-auth-* cookies overflow the Host header limit (431)
-- [#10369](https://github.com/deepseek-ai/deepseek-harness/discussions/10369) [Bug] Windows「打开方式」选中某些应用后，associations.ps1 助手进程永久挂起，界面卡在「正在打开…」
-- [#10367](https://github.com/deepseek-ai/deepseek-harness/discussions/10367) [bug] Agent Teams 会话下 send_message 无法按 id 寻址子代理，但 subagent 工具描述声称可以，这个bug之前修复过一次，但没有修好
-- [#3542](https://github.com/deepseek-ai/deepseek-harness/discussions/3542) [Bug] Manual `/compact` aborts after 5–15s with "DeepSeek request aborted by caller" — 22/23 attempts fail (rc.7 & rc.8)
+- [#3399](https://github.com/deepseek-ai/deepseek-harness/discussions/3399) Bug: DeepSeek "Input token exceed the limit" (400 quota_limit_reached) not classified as context overflow - auto recovery never triggers
+- [#10522](https://github.com/deepseek-ai/deepseek-harness/discussions/10522) Bug: Anthropic Messages 协议下 DeepSeek 模型将 <invoke> 工具调用泄漏为纯文本 → agent 死循环（附修复）
+- [#10129](https://github.com/deepseek-ai/deepseek-harness/discussions/10129) [Bug] 内置会话标题插件几乎从不更新：输出额度 64 个 token 被思考吃光，失败还完全静默（DSH 0.2.1-rc.2）
+- [#10462](https://github.com/deepseek-ai/deepseek-harness/discussions/10462) [Bug] open-in-app returns 502 for all Electron-based editors (Cursor / VS Code / Windsurf) — scrubbedParentEnv() leaks ELECTRON_RUN_AS_NODE=1
+- [#10352](https://github.com/deepseek-ai/deepseek-harness/discussions/10352) [Bug Report] Linux 微信截图无法粘贴进 composer：剪贴板对 image/* 请求一律返回 BMP 字节（Arch + WeChat Linux AppImage）
+- [#7717](https://github.com/deepseek-ai/deepseek-harness/discussions/7717) [Bug] macOS Desktop：⌃⌘F 全屏快捷键未绑定，双击窗口顶部也无法缩放/填满屏幕（缺少基本窗口交互入口）
+- [#10502](https://github.com/deepseek-ai/deepseek-harness/discussions/10502) [Bug] Windows Desktop：F11 无法切换全屏 —— 应用菜单只剩两个隐藏的 DevTools 项，没有全屏入口
+- [#10203](https://github.com/deepseek-ai/deepseek-harness/discussions/10203) [Bug Report] patch-injected "skill-filesystem" row without "name" is silently disabled by preflight
+- [#10498](https://github.com/deepseek-ai/deepseek-harness/discussions/10498) [Bug] Web GUI sidebar terminal: fish shell stalls ~10 s on every new terminal — fish startup DA1 query is never answered (0.2.1-rc.2, Linux)
+- [#9293](https://github.com/deepseek-ai/deepseek-harness/discussions/9293) [Bug] scrubbedParentEnv strips GIT_CONFIG_KEY_n but keeps COUNT/VALUE, so every git call in a child fails
+- [#10492](https://github.com/deepseek-ai/deepseek-harness/discussions/10492) [Bug] Desktop host killed by PartitionAlloc OOM (exit 0xE0000008): whole app exits, and the crash popup shows only the last 64 KB of stderr
+- [#10491](https://github.com/deepseek-ai/deepseek-harness/discussions/10491) [Bug] Office 技能的 "absolute Node and CLI paths supplied below" 实际为空，导致 agent 误判「未安装 LibreOffice 引擎」
+- [#10490](https://github.com/deepseek-ai/deepseek-harness/discussions/10490) [Bug] Desktop Host Connection Race Condition Fix (Code & Agent Note included)
+- [#10475](https://github.com/deepseek-ai/deepseek-harness/discussions/10475) [Bug] Cordis loader fails to import a valid ESM plugin entry point (failed to import)
+- [#810](https://github.com/deepseek-ai/deepseek-harness/discussions/810) [Bug] Windows: sandboxed pwsh always dies with 0xC0000142 under console-less host (desktop launch path)
+- [#10482](https://github.com/deepseek-ai/deepseek-harness/discussions/10482) [Bug] 0.2.1-rc.2 Web GUI 输入框打字丢字（中英文均复现，与皮肤/插件无关）
+- [#10440](https://github.com/deepseek-ai/deepseek-harness/discussions/10440) [bug] 离线补标题写坏会话日志的三个变体，以及一条被漏掉的校验：`session/title.messageSeqs` 引用了非用户消息
+- [#10412](https://github.com/deepseek-ai/deepseek-harness/discussions/10412) [Bug] OpenCode 免费模型 ID 解析错误导致 403，且错误被误映射为“API Key 无效”
+- [#1944](https://github.com/deepseek-ai/deepseek-harness/discussions/1944) [Bug] Compaction request misses provider prefix cache entirely — summarizer doesn't inherit reasoningEffort / adds maxTokens
 
 ## 📋 官方名单配置
 _当前 logins_: `chinesezjc, creatixchu, geeeekexplorer, imccyu, j-xiang, kermanx, kingwl, leggasai, lsdsjy, pku-xht, shigma, tianyicui, turtle1999, yifandingd, yifffan, zdaxie`
 _当前 orgs_: `deepseek-ai`
 _编辑 `maintainers.json` 或新建 `maintainers.local.json` 后提交触发新一轮扫描即可生效。_
 
-_Last updated: 2026-10-21T02:54:15.837Z_
+_Last updated: 2026-10-22T02:52:47.429Z_
