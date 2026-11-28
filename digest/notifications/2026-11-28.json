@@ -1,0 +1,313 @@
+{
+  "generatedAt": "2026-11-28T05:55:26.636Z",
+  "date": "2026-11-28",
+  "repo": "deepseek-ai/deepseek-harness",
+  "summary": {
+    "totalBugs": 2939,
+    "newLast24h": 11,
+    "updatedToday": 1,
+    "resolvedBugs": 32,
+    "answeredBugs": 18,
+    "resolvedOrAnswered": 50,
+    "tierBreakdown": {
+      "official": 1,
+      "community": 18,
+      "reported": 2920
+    }
+  },
+  "byCategory": {
+    "web-ui": [
+      {
+        "number": 14470,
+        "title": "[bug] ContextMeter disappears from composer dock while voice input is active",
+        "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14470",
+        "createdAt": "2026-11-28T04:53:36Z",
+        "updatedAt": "2026-11-28T04:53:36Z",
+        "closedAt": null,
+        "stateReason": null,
+        "isAnswered": false,
+        "category": "General",
+        "labels": [],
+        "answerChosenAt": null,
+        "answerAuthor": null,
+        "mergedPRs": [],
+        "tier": "reported"
+      },
+      {
+        "number": 14470,
+        "title": "[bug] ContextMeter disappears from composer dock while voice input is active",
+        "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14470",
+        "createdAt": "2026-11-28T04:53:36Z",
+        "updatedAt": "2026-11-28T04:53:36Z",
+        "closedAt": null,
+        "stateReason": null,
+        "isAnswered": false,
+        "category": "General",
+        "labels": [],
+        "answerChosenAt": null,
+        "answerAuthor": null,
+        "mergedPRs": [],
+        "tier": "reported"
+      }
+    ],
+    "other": [
+      {
+        "number": 14459,
+        "title": "[Bug] Startup crash: profile package.json with UTF-8 BOM causes JSON.parse failure (Unexpected token '﻿')",
+        "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14459",
+        "createdAt": "2026-11-27T17:59:24Z",
+        "updatedAt": "2026-11-27T18:14:05Z",
+        "closedAt": null,
+        "stateReason": null,
+        "isAnswered": false,
+        "category": "Q&A",
+        "labels": [],
+        "answerChosenAt": null,
+        "answerAuthor": null,
+        "mergedPRs": [],
+        "tier": "reported"
+      },
+      {
+        "number": 14454,
+        "title": "[Bug][0.2.2-rc.5][macOS] Desktop Host idles at ~100% CPU due to client-hmr polling 113 ASAR bundles",
+        "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14454",
+        "createdAt": "2026-11-27T16:28:09Z",
+        "updatedAt": "2026-11-27T16:30:11Z",
+        "closedAt": null,
+        "stateReason": null,
+        "isAnswered": false,
+        "category": "General",
+        "labels": [],
+        "answerChosenAt": null,
+        "answerAuthor": null,
+        "mergedPRs": [],
+        "tier": "reported"
+      },
+      {
+        "number": 14453,
+        "title": "[Bug][0.2.3-alpha.2] 异常退出 Plan 模式后，恢复原会话无法通过 /plan off 退出计划模式",
+        "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14453",
+        "createdAt": "2026-11-27T16:22:25Z",
+        "updatedAt": "2026-11-27T16:22:25Z",
+        "closedAt": null,
+        "stateReason": null,
+        "isAnswered": false,
+        "category": "General",
+        "labels": [],
+        "answerChosenAt": null,
+        "answerAuthor": null,
+        "mergedPRs": [],
+        "tier": "reported"
+      },
+      {
+        "number": 14442,
+        "title": "[Bug] Windows Job runner \"managed range empty\" failures: surface the runner stderr and status instead of only a generic fail-closed message",
+        "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14442",
+        "createdAt": "2026-11-27T13:23:54Z",
+        "updatedAt": "2026-11-27T13:23:54Z",
+        "closedAt": null,
+        "stateReason": null,
+        "isAnswered": false,
+        "category": "General",
+        "labels": [],
+        "answerChosenAt": null,
+        "answerAuthor": null,
+        "mergedPRs": [],
+        "tier": "reported"
+      },
+      {
+        "number": 14432,
+        "title": "[Bug] web_fetch: script text media types (application/javascript) are rejected, and binary rejections name no alternative",
+        "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14432",
+        "createdAt": "2026-11-27T11:34:15Z",
+        "updatedAt": "2026-11-27T11:34:15Z",
+        "closedAt": null,
+        "stateReason": null,
+        "isAnswered": false,
+        "category": "General",
+        "labels": [],
+        "answerChosenAt": null,
+        "answerAuthor": null,
+        "mergedPRs": [],
+        "tier": "reported"
+      },
+      {
+        "number": 14422,
+        "title": "[Bug] Auto review: the reviewer request drops the session reasoningEffort, so thinking-only routes block every reviewed tool",
+        "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14422",
+        "createdAt": "2026-11-27T09:51:43Z",
+        "updatedAt": "2026-11-27T09:51:43Z",
+        "closedAt": null,
+        "stateReason": null,
+        "isAnswered": false,
+        "category": "General",
+        "labels": [],
+        "answerChosenAt": null,
+        "answerAuthor": null,
+        "mergedPRs": [],
+        "tier": "reported"
+      },
+      {
+        "number": 14414,
+        "title": "[Bug] /compact on a large Session: summarization bypasses the provider retry policy, and the failure text hides the cause",
+        "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14414",
+        "createdAt": "2026-11-27T07:36:12Z",
+        "updatedAt": "2026-11-27T07:36:12Z",
+        "closedAt": null,
+        "stateReason": null,
+        "isAnswered": false,
+        "category": "General",
+        "labels": [],
+        "answerChosenAt": null,
+        "answerAuthor": null,
+        "mergedPRs": [],
+        "tier": "reported"
+      }
+    ],
+    "plugin": [
+      {
+        "number": 14429,
+        "title": "[Bug] web boot names the wrong plugin: a dead batch script is reported as import failed (see console …) on innocent entries",
+        "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14429",
+        "createdAt": "2026-11-27T11:21:39Z",
+        "updatedAt": "2026-11-27T11:21:39Z",
+        "closedAt": null,
+        "stateReason": null,
+        "isAnswered": false,
+        "category": "General",
+        "labels": [],
+        "answerChosenAt": null,
+        "answerAuthor": null,
+        "mergedPRs": [],
+        "tier": "reported"
+      },
+      {
+        "number": 14421,
+        "title": "[Bug] cordis_inspect: a JSON-encoded object `input` is rejected after passing tool validation",
+        "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14421",
+        "createdAt": "2026-11-27T09:33:58Z",
+        "updatedAt": "2026-11-27T09:33:58Z",
+        "closedAt": null,
+        "stateReason": null,
+        "isAnswered": false,
+        "category": "General",
+        "labels": [],
+        "answerChosenAt": null,
+        "answerAuthor": null,
+        "mergedPRs": [],
+        "tier": "reported"
+      }
+    ],
+    "win-sandbox": [
+      {
+        "number": 14426,
+        "title": "[Bug] workspace-write on a WSL UNC workspace root fails with a misleading ACL permission error — coded diagnosis proposed",
+        "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14426",
+        "createdAt": "2026-11-27T10:49:59Z",
+        "updatedAt": "2026-11-27T10:49:59Z",
+        "closedAt": null,
+        "stateReason": null,
+        "isAnswered": false,
+        "category": "General",
+        "labels": [],
+        "answerChosenAt": null,
+        "answerAuthor": null,
+        "mergedPRs": [],
+        "tier": "reported"
+      }
+    ]
+  },
+  "newBugs": [
+    {
+      "number": 14470,
+      "title": "[bug] ContextMeter disappears from composer dock while voice input is active",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14470",
+      "tier": "reported",
+      "createdAt": "2026-11-28T04:53:36Z",
+      "labels": []
+    },
+    {
+      "number": 14459,
+      "title": "[Bug] Startup crash: profile package.json with UTF-8 BOM causes JSON.parse failure (Unexpected token '﻿')",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14459",
+      "tier": "reported",
+      "createdAt": "2026-11-27T17:59:24Z",
+      "labels": []
+    },
+    {
+      "number": 14454,
+      "title": "[Bug][0.2.2-rc.5][macOS] Desktop Host idles at ~100% CPU due to client-hmr polling 113 ASAR bundles",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14454",
+      "tier": "reported",
+      "createdAt": "2026-11-27T16:28:09Z",
+      "labels": []
+    },
+    {
+      "number": 14453,
+      "title": "[Bug][0.2.3-alpha.2] 异常退出 Plan 模式后，恢复原会话无法通过 /plan off 退出计划模式",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14453",
+      "tier": "reported",
+      "createdAt": "2026-11-27T16:22:25Z",
+      "labels": []
+    },
+    {
+      "number": 14442,
+      "title": "[Bug] Windows Job runner \"managed range empty\" failures: surface the runner stderr and status instead of only a generic fail-closed message",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14442",
+      "tier": "reported",
+      "createdAt": "2026-11-27T13:23:54Z",
+      "labels": []
+    },
+    {
+      "number": 14432,
+      "title": "[Bug] web_fetch: script text media types (application/javascript) are rejected, and binary rejections name no alternative",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14432",
+      "tier": "reported",
+      "createdAt": "2026-11-27T11:34:15Z",
+      "labels": []
+    },
+    {
+      "number": 14429,
+      "title": "[Bug] web boot names the wrong plugin: a dead batch script is reported as import failed (see console …) on innocent entries",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14429",
+      "tier": "reported",
+      "createdAt": "2026-11-27T11:21:39Z",
+      "labels": []
+    },
+    {
+      "number": 14426,
+      "title": "[Bug] workspace-write on a WSL UNC workspace root fails with a misleading ACL permission error — coded diagnosis proposed",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14426",
+      "tier": "reported",
+      "createdAt": "2026-11-27T10:49:59Z",
+      "labels": []
+    },
+    {
+      "number": 14422,
+      "title": "[Bug] Auto review: the reviewer request drops the session reasoningEffort, so thinking-only routes block every reviewed tool",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14422",
+      "tier": "reported",
+      "createdAt": "2026-11-27T09:51:43Z",
+      "labels": []
+    },
+    {
+      "number": 14421,
+      "title": "[Bug] cordis_inspect: a JSON-encoded object `input` is rejected after passing tool validation",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14421",
+      "tier": "reported",
+      "createdAt": "2026-11-27T09:33:58Z",
+      "labels": []
+    },
+    {
+      "number": 14414,
+      "title": "[Bug] /compact on a large Session: summarization bypasses the provider retry policy, and the failure text hides the cause",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/discussions/14414",
+      "tier": "reported",
+      "createdAt": "2026-11-27T07:36:12Z",
+      "labels": []
+    }
+  ],
+  "updatedBugs": [],
+  "digestIndexUrl": "https://raw.githubusercontent.com/luuman-code/dsh-bug-watch/master/digest/index.md",
+  "digestLatestUrl": "https://raw.githubusercontent.com/luuman-code/dsh-bug-watch/master/digest/notifications/latest.json"
+}
